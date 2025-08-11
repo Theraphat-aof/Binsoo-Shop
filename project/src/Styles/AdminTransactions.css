@@ -1,0 +1,217 @@
+/* General Page Container */
+.admin-transaction-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 8px;
+}
+
+.admin-transaction-container h1 {
+  color: #000000;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.error-message {
+  color: #d9534f;
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #dc7633;
+  border-radius: 10px;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  font-size: 16px;
+}
+
+.form-group textarea {
+  resize: vertical; /* Allow vertical resizing of textarea */
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Filters Section */
+.admin-filters-section {
+  border-radius: 8px;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.admin-filters-section h2 {
+  grid-column: 1 / -1; /* Span across all columns */
+  text-align: left;
+  margin: 0;
+  color: #784212;
+}
+
+.filter-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #784212;
+}
+
+.filter-group select,
+.filter-group input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #dc7633;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.filter-group select:focus,
+.filter-group input[type="date"]:focus {
+  border-color: #dc7633 !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(220, 118, 51, 0.25);
+}
+
+.admin-table-section h2 {
+  margin: 20px 0;
+  text-align: left;
+  color: #784212;
+}
+
+.admin-table-transactions {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.admin-table-transactions th,
+.admin-table-transactions td {
+  width: 100%;
+  padding: 12px 15px;
+  text-align: left;
+  border-top: 1px solid #ddd;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.admin-table-transactions th {
+  background-color: #dc7633;
+  color: #fae5d3;
+  font-weight: bold;
+}
+
+.admin-table-transactions tr:hover {
+  background-color: #e9ecef;
+}
+
+.admin-table-transactions tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+  border-bottom: none;
+}
+
+.admin-table-transactions th:nth-child(1), /* Name column header */
+.admin-table-transactions td:nth-child(1) {
+  /* Name column data */
+  width: 10%; /* Reduce Name column width */
+  max-width: 50px; /* Optional: set a max width to ensure it wraps */
+}
+
+.admin-table-transactions th:nth-child(2), /* Base Price column header */
+.admin-table-transactions td:nth-child(2) {
+  /* Base Price column data */
+  width: 20%; /* Increase Base Price column width */
+  max-width: 100px; /* Optional: limit for prices */
+}
+
+.admin-table-transactions th:nth-child(3), /* Description column header */
+.admin-table-transactions td:nth-child(3) {
+  /* Description column data */
+  width: 10%; /* Significantly increase Description column width */
+}
+
+.admin-table-transactions th:nth-child(4), /* Actions column header */
+.admin-table-transactions td:nth-child(4) {
+  /* Actions column data */
+  width: 10%; /* Keep Actions column roughly the same or adjust */
+}
+
+.admin-table-transactions th:nth-child(5), /* Actions column header */
+.admin-table-transactions td:nth-child(5) {
+  /* Actions column data */
+  width: 30%; /* Keep Actions column roughly the same or adjust */
+}
+
+.admin-table-transactions th:nth-child(6), /* Actions column header */
+.admin-table-transactions td:nth-child(6) {
+  /* Actions column data */
+  width: 10%; /* Keep Actions column roughly the same or adjust */
+}
+
+.admin-table-transactions th:nth-child(7), /* Actions column header */
+.admin-table-transactions td:nth-child(7) {
+  /* Actions column data */
+  width: 10%; /* Keep Actions column roughly the same or adjust */
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .admin-filters-section {
+    grid-template-columns: 1fr; /* Stack filters on small screens */
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .admin-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 575px) {
+  .admin-transaction-container {
+    padding: 5px;
+    margin: 0px auto;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 18px;
+  }
+  .admin-filters-section {
+    margin: 10px;
+  }
+  .admin-table-transactions {
+    margin: 10px auto;
+  }
+  .group-btn-edit-detele {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: auto;
+  }
+}

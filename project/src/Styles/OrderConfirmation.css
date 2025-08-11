@@ -1,0 +1,130 @@
+/* src/pages/OrderConfirmationPage.css */
+
+.confirmation-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.confirmation-title {
+    color: #28a745;
+    margin-bottom: 25px;
+    font-size: 2.2em;
+}
+
+.order-summary-box {
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.order-summary-box h3 {
+    color: #000000;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.order-summary-box p {
+    margin-bottom: 8px;
+    font-size: 1.1em;
+    line-height: 1.4;
+}
+
+.order-summary-box strong {
+    color: #000;
+}
+
+.payment-qr-section,
+.payment-cash-section {
+    background-color: #ffffff; /* Light blue background for payment info */
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.payment-instructions {
+    font-size: 1.2em;
+    color: #000000;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.cash-instructions {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.qr-code-display {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.download-qr-button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.download-qr-button:hover {
+    background-color: #0056b3;
+}
+
+.status-note {
+    font-size: 0.95em;
+    color: #777;
+    margin-top: 25px;
+    line-height: 1.5;
+}
+
+.next-steps-section {
+    margin-top: 30px;
+}
+
+.next-steps-section p {
+    font-size: 1.1em;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.next-steps-section a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.next-steps-section a:hover {
+    text-decoration: underline;
+}
+
+.back-to-home-button {
+    background-color: #6c757d;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.back-to-home-button:hover {
+    background-color: #5a6268;
+}

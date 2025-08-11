@@ -1,9 +1,55 @@
+/* eslint-disable no-useless-catch */
 // src/services/authService.js
 import axios from 'axios';
 
-// ดึง base URL จาก .env file
-// ตรวจสอบให้แน่ใจว่าได้สร้างไฟล์ .env และมี VITE_API_BASE_URL=http://localhost:7040/api
+// ดึง Base URL ของ API จาก Environment Variables
+// ตรวจสอบให้แน่ใจว่า VITE_API_BASE_URL ถูกตั้งค่าอย่างถูกต้องในไฟล์ .env ของคุณ
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+// สร้าง Axios instance เพื่อใช้สำหรับ API calls ทั้งหมด
+// ทำให้ง่ายต่อการตั้งค่าและจัดการ interceptor เพียงครั้งเดียว
+const axiosInstance = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// ตัวแปรสำหรับเก็บ reference ของฟังก์ชัน handleApiError จาก AuthProvider
+// ฟังก์ชันนี้จะถูกเรียกเมื่อเกิดข้อผิดพลาดจาก API
+let errorHandlerCallback = null;
+
+/**
+ * ฟังก์ชันสำหรับตั้งค่า callback จาก AuthProvider
+ * @param {function} callback - ฟังก์ชันที่จะถูกเรียกเมื่อเกิดข้อผิดพลาดจาก API
+ */
+const setErrorHandler = (callback) => {
+  errorHandlerCallback = callback;
+};
+
+// เพิ่ม Axios Interceptor สำหรับ Response
+// Interceptor นี้จะดักจับ Response ที่มี Error ก่อนที่จะส่งต่อไปยัง Component ที่เรียกใช้
+axiosInstance.interceptors.response.use(
+  (response) => response, // ถ้า Response สำเร็จ ให้ส่ง Response นั้นกลับไป
+  (error) => {
+    // ถ้า Response มี Error
+    if (errorHandlerCallback) {
+      // เรียกใช้ฟังก์ชัน handleApiError ที่ส่งมาจาก AuthProvider
+      // หาก handleApiError จัดการ Error แล้ว (เช่น redirect หน้า, แสดงข้อความ) จะคืนค่า true
+      const handled = errorHandlerCallback(error);
+      if (handled) {
+        // ถ้า error ถูกจัดการแล้ว ไม่ต้อง throw error ซ้ำ
+        // การคืนค่า Promise ที่ไม่ resolve/reject จะหยุดการประมวลผล Error ต่อไป
+        return new Promise(() => {});
+      }
+    }
+    // ถ้า error ไม่ได้ถูกจัดการโดย errorHandlerCallback หรือไม่มี callback
+    // ให้ throw error นั้นกลับไป เพื่อให้ Component หรือ Hook ที่เรียกใช้จัดการต่อ
+    // โดยจะพยายามส่ง error.response.data กลับไปก่อน (ซึ่งมักจะมีข้อความ error จาก Backend)
+    // หากไม่มี ก็จะใช้ error.message ทั่วไป
+    return Promise.reject(error.response ? error.response.data : new Error(error.message));
+  }
+);
 
 const authService = {
   /**
@@ -16,22 +62,21 @@ const authService = {
    */
   register: async (username, email, password) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/auth/register`, {
+      // ใช้ `/auth/register` เพื่อความสอดคล้องกับโครงสร้าง API ทั่วไป
+      const response = await axiosInstance.post(`/auth/register`, { 
         username,
         email,
         password,
       });
-      // Backend ควรจะคืนค่าเช่น { message: 'User registered successfully!' }
       return response.data;
     } catch (error) {
-      // จัดการ Error ที่มาจาก Backend (เช่น validation errors, user already exists)
-      // error.response.data จะมีข้อมูล error ที่ Backend ส่งกลับมา
-      throw error.response ? error.response.data : new Error(error.message);
+      // error จะถูกจัดการโดย interceptor หรือถูกโยนต่อไปยัง AuthProvider
+      throw error;
     }
   },
 
   /**
-   * ฟังก์ชันสำหรับเข้าสู่ระบบผู้ใช้
+   * ฟังก์ชันสำหรับเข้าสู่ระบบผู้ใช้ (local account)
    * @param {string} username - ชื่อผู้ใช้หรืออีเมล
    * @param {string} password - รหัสผ่าน
    * @returns {Promise<object>} ข้อมูล Response จาก Backend (รวมถึง token และ user info)
@@ -39,36 +84,61 @@ const authService = {
    */
   login: async (username, password) => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/auth/login`, {
-        username, // ใช้ชื่อเดียวกับที่ Backend คาดหวัง
+      const response = await axiosInstance.post(`/auth/login`, { 
+        username,
         password,
       });
-      // Backend ควรจะคืนค่าเช่น { token: '...', user: { id: ..., username: ..., role: ... } }
       const { token, user } = response.data;
 
-      // เก็บ JWT ไว้ใน localStorage เพื่อใช้งานในภายหลัง
+      // เก็บ token และข้อมูลผู้ใช้ใน Local Storage
       localStorage.setItem('token', token);
-      // อาจจะเก็บข้อมูล user พื้นฐานไว้ใน localStorage ด้วย
       localStorage.setItem('user', JSON.stringify(user));
 
-      return response.data; // คืนค่าข้อมูลทั้งหมด
+      return response.data;
     } catch (error) {
-      // จัดการ Error เช่น Invalid Credentials
-      throw error.response ? error.response.data : new Error(error.message);
+      // error จะถูกจัดการโดย interceptor หรือถูกโยนต่อไปยัง AuthProvider
+      throw error;
     }
   },
 
   /**
-   * ฟังก์ชันสำหรับออกจากระบบ (ลบ token ออกจาก localStorage)
+   * ฟังก์ชันสำหรับเข้าสู่ระบบด้วย Firebase (เช่น Google Sign-in)
+   * @param {object} firebaseUserData - ข้อมูลผู้ใช้จาก Firebase (idToken, uid, email, displayName, photoURL)
+   * @returns {Promise<object>} ข้อมูล Response จาก Backend (รวมถึง token และ user info)
+   * @throws {object} Error object จาก Backend หากมีข้อผิดพลาด
+   */
+  loginWithFirebase: async ({ idToken, uid, email, displayName, photoURL }) => {
+    try {
+      const response = await axiosInstance.post(`/auth/login/firebase`, { 
+        idToken,
+        uid,
+        email,
+        displayName,
+        photoURL,
+      });
+      const { token, user } = response.data;
+
+      // เก็บ token และข้อมูลผู้ใช้ใน Local Storage
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+
+      return response.data;
+    } catch (error) {
+      // error จะถูกจัดการโดย interceptor หรือถูกโยนต่อไปยัง AuthProvider
+      throw error;
+    }
+  },
+
+  /**
+   * ฟังก์ชันสำหรับออกจากระบบ (ลบ token และข้อมูลผู้ใช้ออกจาก localStorage)
    */
   logout: () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    // อาจจะต้อง Redirect ไปหน้า Login ด้วย
   },
 
   /**
-   * ฟังก์ชันสำหรับดึง token ที่เก็บไว้
+   * ฟังก์ชันสำหรับดึง token ที่เก็บไว้ใน Local Storage
    * @returns {string|null} JWT token หรือ null ถ้าไม่มี
    */
   getToken: () => {
@@ -77,7 +147,7 @@ const authService = {
 
   /**
    * ฟังก์ชันสำหรับตรวจสอบว่าผู้ใช้ Login อยู่หรือไม่
-   * (เป็นแค่การตรวจสอบ token ใน localStorage เบื้องต้น ไม่ได้ยืนยันกับ Backend)
+   * (เป็นการตรวจสอบ token ใน localStorage เบื้องต้น ไม่ได้ยืนยันกับ Backend)
    * @returns {boolean} true ถ้ามี token, false ถ้าไม่มี
    */
   isLoggedIn: () => {
@@ -85,13 +155,56 @@ const authService = {
   },
 
   /**
-   * ฟังก์ชันสำหรับดึงข้อมูลผู้ใช้ที่เก็บไว้ (ถ้ามี)
+   * ฟังก์ชันสำหรับดึงข้อมูลผู้ใช้ที่เก็บไว้ใน Local Storage (ถ้ามี)
    * @returns {object|null} ข้อมูลผู้ใช้ หรือ null
    */
   getCurrentUser: () => {
     const userStr = localStorage.getItem('user');
-    return userStr ? JSON.parse(userStr) : null;
+    if (userStr) {
+      try {
+        return JSON.parse(userStr);
+      } catch (e) {
+        console.error("Error parsing user data from localStorage:", e);
+        return null;
+      }
+    }
+    return null;
   },
+
+  /**
+   * ฟังก์ชันสำหรับตรวจสอบความถูกต้องของ token กับ Backend
+   * Endpoint นี้มักจะใช้เพื่อดึงข้อมูลผู้ใช้ปัจจุบันและยืนยัน token
+   * @returns {Promise<object>} ข้อมูล user จาก Backend หาก token ยังถูกต้อง
+   * @throws {object} Error object หาก token ไม่ถูกต้องหรือหมดอายุ (ซึ่งจะถูก interceptor จัดการ)
+   */
+  verifyToken: async () => {
+    try {
+      // Endpoint สำหรับดึงข้อมูลผู้ใช้ปัจจุบัน (เช่น /auth/me หรือ /users/me)
+      const response = await axiosInstance.get(`/auth/me`); 
+      return response.data; 
+    } catch (error) {
+      // error จะถูกจัดการโดย interceptor หรือถูกโยนต่อไปยัง AuthProvider
+      throw error;
+    }
+  },
+
+  // ส่งออกฟังก์ชัน setErrorHandler เพื่อให้ AuthProvider สามารถตั้งค่าได้
+  setErrorHandler,
 };
+
+// ตั้งค่า Interceptor สำหรับการส่ง request (แนบ token ไปกับทุก request ที่ต้องการการยืนยันตัวตน)
+// ต้องทำหลังจากที่ authService.getToken ถูกกำหนดแล้ว
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = authService.getToken(); // ใช้ getToken จาก authService
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export default authService;

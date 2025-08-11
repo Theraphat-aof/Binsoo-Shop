@@ -1,0 +1,325 @@
+/* General Page Layout (Existing styles) */
+.admin-size-container {
+  max-width: 1200px;
+  margin: 0px auto;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.admin-size-container h1 {
+  color: #000000;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* Add New Button (Existing styles) */
+.add-new-button {
+  background-color: #784212;
+  color: #fae5d3;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.add-new-button:hover {
+  background-color: #dc7633;
+}
+
+/* Form Group (Existing styles, apply to both page and modal forms) */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #784212;
+  font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea {
+  width: calc(100% - 20px); /* Account for padding */
+  padding: 10px;
+  border: 1px solid #dc7633;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.form-group textarea {
+  resize: vertical; /* Allow vertical resizing */
+  min-height: 80px;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group textarea:focus {
+  border-color: #dc7633 !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(220, 118, 51, 0.25);
+}
+
+form button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Error Message (Existing styles) */
+.error-message {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Loading State (Existing styles) */
+p {
+  text-align: center;
+  color: #666;
+  font-size: 18px;
+}
+
+/* Admin Table (Existing styles) */
+.admin-table-size {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+    overflow: hidden; /* Ensures rounded corners apply to content */
+
+}
+
+.admin-table-size th,
+.admin-table-size td {
+  width: 100%;
+  padding: 12px 15px;
+  text-align: left;
+  border-top: 1px solid #ddd;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.admin-table-size th {
+  background-color: #dc7633;
+  color: #fae5d3;
+  font-weight: bold;
+}
+
+.admin-table-size tr:hover {
+  background-color: #e9ecef;
+}
+
+.admin-table-size tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+  border-bottom: none;
+}
+
+/* Action Buttons in Table (Existing styles) */
+.edit-button,
+.delete-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.admin-table-size th:nth-child(1), /* Name column header */
+.admin-table-size td:nth-child(1) {
+  /* Name column data */
+  width: 15%; /* Reduce Name column width */
+  max-width: 150px; /* Optional: set a max width to ensure it wraps */
+}
+
+.admin-table-size th:nth-child(2), /* Base Price column header */
+.admin-table-size td:nth-child(2) {
+  /* Base Price column data */
+  width: 20%; /* Increase Base Price column width */
+  max-width: 120px; /* Optional: limit for prices */
+}
+
+.admin-table-size th:nth-child(3), /* Description column header */
+.admin-table-size td:nth-child(3) {
+  /* Description column data */
+  width: 45%; /* Significantly increase Description column width */
+}
+
+.admin-table-size th:nth-child(4), /* Actions column header */
+.admin-table-size td:nth-child(4) {
+  /* Actions column data */
+  width: 20%; /* Keep Actions column roughly the same or adjust */
+  text-align: center; /* Center buttons */
+}
+
+.edit-button {
+  background-color: #ffd900;
+  color: rgb(112, 84, 5);
+}
+
+.edit-button:hover {
+  background-color: #cfb000;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}
+
+/* Pagination (Existing styles) */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  padding-bottom: 20px;
+}
+
+.pagination button {
+  background-color: #784212;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  margin: 0 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #dc7633;
+  color: white;
+}
+
+.pagination button.active {
+  background-color: #dc7633;
+  color: white;
+  border-color: #dc7633;
+  font-weight: bold;
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* --- NEW MODAL STYLES --- */
+.modal-overlay {
+  position: fixed; /* Stays in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 90%; /* Adjust as needed */
+  max-width: 500px; /* Max width for larger screens */
+  animation: fadeIn 0.3s ease-out; /* Simple fade-in animation */
+  position: relative; /* Needed for positioning close button if added */
+}
+
+.modal-content h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+/* Animation for modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Adjustments (Existing styles) */
+@media (max-width: 767px) {
+  .admin-size-container {
+    padding: 15px;
+    margin: 0px auto;
+  }
+
+    .admin-size-container h1 {
+      margin-bottom: 10px;
+    }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .edit-button,
+  .delete-button {
+    padding: 6px 10px;
+    font-size: 12px;
+    margin-right: 5px;
+  }
+}
+
+@media (max-width: 575px) {
+  .admin-size-container {
+    padding: 5px;
+    margin: 0px auto;
+  }
+  h1 {
+    font-size: 24px;
+  }
+    .admin-table-size {
+    margin: 10px auto;
+  }
+  .group-btn-edit-detele {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    gap: 10px;
+    margin: auto;
+  }
+
+  /* Modal content adjustments for smaller screens */
+  .modal-content {
+    padding: 20px;
+  }
+
+  form button {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .pagination button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}

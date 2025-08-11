@@ -1,7 +1,7 @@
 // src/components/ProtectedRoute.jsx
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import { useAuth } from '../Components/useAuth';
 
 /**
  * Component สำหรับป้องกัน Route ที่ต้องมีการ Login หรือมี Role ที่กำหนด
@@ -19,7 +19,7 @@ const ProtectedRoute = ({ allowedRoles }) => {
 
   // 2. ถ้าไม่ได้ Login ให้ Redirect ไปหน้า Login
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   // 3. ถ้า Login แล้ว แต่มี allowedRoles กำหนดไว้

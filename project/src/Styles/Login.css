@@ -1,0 +1,335 @@
+/* src/pages/Auth/Login.css */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.chocolate-drip-header {
+  position: absolute;
+  top: 0; /* ให้ส่วนหัวอยู่ด้านบน */
+  left: 0;
+  width: 100%; /* ให้ div นี้มีความกว้างเต็มหน้าจอ */
+  height: 500px; /* ตัวอย่างความสูงสำหรับเดสก์ท็อป - ปรับได้ตามต้องการ */
+  overflow: hidden;
+}
+
+.chocolate-drip-header svg {
+  width: 100%; /* ให้ SVG มีความกว้างเต็ม container */
+  height: 100%; /* ให้ SVG มีความสูงเต็ม container */
+  display: block; /* ลบช่องว่างด้านล่าง SVG ที่อาจเกิดจาก inline element */
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  min-height: 100vh; /* ให้สูงเต็มจอ */
+  position: relative; /* สำหรับให้ header ที่เป็น absolute อ้างอิงได้ */
+  padding-top: 15em; /* เว้นที่ว่างด้านบนสำหรับ header ที่เป็น absolute */
+  box-sizing: border-box;
+}
+
+.login-container h2 {
+  color: #784212;
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 2em;
+}
+
+.login-form {
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px; /* Base max-width for larger screens */
+  box-sizing: border-box;
+  z-index: 2; /* Ensure it appears above the chocolate drip */
+}
+
+.login-form h1 {
+  color: #784212;
+  text-align: center;
+  margin: 0;
+}
+
+.login-form div {
+  margin-bottom: 20px;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #784212;
+  font-weight: bold;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dc7633;
+  border-radius: 10px;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+.login-form input[type="text"]:focus,
+.login-form input[type="password"]:focus {
+  border-color: #784212;
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(220, 118, 51, 0.25);
+}
+
+.login-form button {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+
+.login-form .login {
+  margin-bottom: 1em;
+  padding: 10px;
+  background-color: #58300d !important;
+  color: #fae5d3 !important;
+}
+
+.login-form .login:hover {
+  background-color: #dc7633 !important;
+  color: #fae5d3 !important;
+}
+
+.login-google {
+  color: black !important;
+  background-color: #ffffff;
+}
+
+.login-google:hover {
+  background-color: #d1d1d1;
+}
+
+.error-message {
+  color: #a94442; 
+  background-color: #f2dede;
+  border: 1px solid #ebccd1; 
+  padding: 10px !important;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1em; 
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: fadeInOut 5s forwards; /* 5s duration, stays at end state */
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); } /* เริ่มต้นจางหายและเลื่อนขึ้นเล็กน้อย */
+  10% { opacity: 1; transform: translateY(0); } /* ปรากฏขึ้นเต็มที่ */
+  90% { opacity: 1; transform: translateY(0); } /* คงอยู่ */
+  100% { opacity: 0; transform: translateY(-10px); } /* จางหายและเลื่อนขึ้นเล็กน้อย */
+}
+
+/* --- Responsive Adjustments --- */
+
+@media (max-width: 575px) {
+  .login-container {
+    padding-top: 18em;
+    overflow: hidden !important;
+  }
+
+  .login-container h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
+
+  .login-form {
+    padding: 15px;
+    max-width: 90%; /* ใช้พื้นที่มากขึ้นบนหน้าจอเล็ก */
+  }
+
+  .login-form div {
+    margin-bottom: 15px;
+  }
+
+  .login-form label {
+    font-size: 0.9em;
+  }
+
+  .login-form input[type="text"],
+  .login-form input[type="password"] {
+    padding: 10px;
+    font-size: 0.9em;
+  }
+
+  .login-form button {
+    padding: 10px;
+    font-size: 1em;
+  }
+  .error-message {
+    padding: 8px;
+  }
+}
+
+/* สำหรับมือถือ (หน้าจอกว้างไม่เกิน 768px) */
+@media (max-width: 767px) {
+  .login-container {
+    padding-top: 18em;
+    overflow: hidden !important;
+  }
+
+  .login-container h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
+
+  .login-form {
+    padding: 15px;
+    max-width: 90% !important; /* ใช้พื้นที่มากขึ้นบนหน้าจอเล็ก */
+  }
+
+  .login-form div {
+    margin-bottom: 15px;
+  }
+
+  .login-form label {
+    font-size: 0.9em;
+  }
+
+  .login-form input[type="text"],
+  .login-form input[type="password"] {
+    padding: 10px;
+    font-size: 0.9em;
+  }
+
+  .login-form button {
+    padding: 10px;
+    font-size: 1em;
+  }
+  .error-message {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 991px) {
+  .login-container {
+    padding-top: 0em !important;
+    overflow: hidden !important;
+  }
+
+  .login-container h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
+
+  .login-form {
+    padding: 15px;
+    max-width: 90%; /* ใช้พื้นที่มากขึ้นบนหน้าจอเล็ก */
+  }
+
+  .login-form div {
+    margin-bottom: 15px;
+  }
+
+  .login-form label {
+    font-size: 0.9em;
+  }
+
+  .login-form input[type="text"],
+  .login-form input[type="password"] {
+    padding: 10px;
+    font-size: 0.9em;
+  }
+
+  .login-form button {
+    padding: 10px;
+    font-size: 1em;
+  }
+  .error-message {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 1199px) {
+  .login-container {
+    padding-top: 20em !important; 
+    overflow: hidden !important;
+  }
+
+  .login-container h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
+
+  .login-form {
+    max-width: 70%; /* ใช้พื้นที่มากขึ้นบนหน้าจอเล็ก */
+  }
+
+  .login-form div {
+    margin-bottom: 15px;
+  }
+
+  .login-form label {
+    font-size: 0.9em;
+  }
+
+  .login-form input[type="text"],
+  .login-form input[type="password"] {
+    padding: 10px;
+    font-size: 0.9em;
+  }
+
+  .login-form button {
+    padding: 10px;
+    font-size: 1em;
+  }
+  .error-message {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 1399px) {
+  .login-container {
+    padding-top: 4em;
+    overflow: hidden !important;
+  }
+
+  .login-container h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
+
+  .login-form {
+    max-width: 60%; /* ใช้พื้นที่มากขึ้นบนหน้าจอเล็ก */
+  }
+
+  .login-form div {
+    margin-bottom: 15px;
+  }
+
+  .login-form label {
+    font-size: 0.9em;
+  }
+
+  .login-form input[type="text"],
+  .login-form input[type="password"] {
+    padding: 10px;
+    font-size: 0.9em;
+  }
+
+  .login-form button {
+    padding: 10px;
+    font-size: 1em;
+  }
+  .error-message {
+    padding: 8px;
+  }
+}
+

@@ -1,0 +1,157 @@
+/* src/pages/Auth/Register.css */
+
+.register-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh; /* Adjust as needed */
+  padding: 10px;
+}
+
+.register-container h2 {
+  color: #784212;
+  margin: 10px;
+  font-size: 2em;
+}
+
+.register-form {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px; /* Base max-width for larger screens */
+  box-sizing: border-box; /* Include padding in width */
+}
+
+.register-form div {
+  margin-bottom: 20px;
+}
+
+.register-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #784212;
+  font-weight: bold;
+}
+
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dc7633;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+.register-form input[type="text"]:focus,
+.register-form input[type="email"]:focus,
+.register-form input[type="password"]:focus {
+  border-color: #dc7633 !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(220, 118, 51, 0.25);
+}
+
+.register-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #784212 !important;
+  color: #fae5d3 !important;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-form button:hover {
+  background-color: #dc7633 !important;
+  color: #fae5d3 !important;
+  transform: translateY(-2px);
+}
+
+.success-message {
+  color: green;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 0.95em;
+}
+
+.error-message {
+  color: red;
+  margin-top: 15px;
+  text-align: center;
+  font-size: 0.95em;
+}
+
+/* --- Responsive Adjustments --- */
+
+/* สำหรับมือถือ (หน้าจอกว้างไม่เกิน 768px) */
+@media (max-width: 768px) {
+  .register-container {
+    padding: 15px;
+  }
+
+  .register-container h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
+
+  .register-form {
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    max-width: 95%; /* ใช้พื้นที่มากขึ้นบนหน้าจอเล็ก */
+  }
+
+  .register-form div {
+    margin-bottom: 15px;
+  }
+
+  .register-form label {
+    font-size: 0.9em;
+  }
+
+  .register-form input[type="text"],
+  .register-form input[type="email"],
+  .register-form input[type="password"] {
+    padding: 10px;
+    font-size: 0.9em;
+  }
+
+  .register-form button {
+    padding: 10px;
+    font-size: 1em;
+  }
+}
+
+/* สำหรับ iPad และ Tablet (หน้าจอระหว่าง 769px ถึง 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .register-container {
+    padding: 25px;
+  }
+
+  .register-form {
+    max-width: 550px; /* อาจจะขยายใหญ่ขึ้นเล็กน้อยสำหรับแท็บเล็ต */
+    padding: 30px;
+  }
+
+  .register-form h2 {
+    font-size: 2.2em;
+  }
+}
+
+/* สำหรับ Desktop และหน้าจอขนาดใหญ่ (หน้าจอกว้างตั้งแต่ 1025px ขึ้นไป) */
+@media (min-width: 1025px) {
+  .register-container {
+    padding: 10px;
+  }
+
+  .register-form {
+    max-width: 500px; /* กำหนดขนาดที่เหมาะสมสำหรับ desktop */
+    padding: 40px;
+  }
+}

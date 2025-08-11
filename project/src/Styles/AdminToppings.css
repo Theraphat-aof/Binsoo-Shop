@@ -1,0 +1,188 @@
+.admin-topping-container {
+  max-width: 1200px;
+  margin: 0px auto;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.admin-topping-container h1 {
+  color: #000000;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.admin-table-toppings {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.admin-table-toppings th,
+.admin-table-toppings td {
+  width: 100%;
+  padding: 12px 15px;
+  text-align: left;
+  border-top: 1px solid #ddd;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.admin-table-toppings th {
+  background-color: #dc7633;
+  color: #fae5d3;
+  font-weight: bold;
+}
+
+.admin-table-toppings tr:hover {
+  background-color: #e9ecef;
+}
+
+.admin-table-toppings tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+  border-bottom: none;
+}
+
+.admin-table-toppings th:nth-child(1), /* Name column header */
+.admin-table-toppings td:nth-child(1) {
+  /* Name column data */
+  width: 20%; /* Reduce Name column width */
+  max-width: 100px; /* Optional: set a max width to ensure it wraps */
+}
+
+.admin-table-toppings th:nth-child(2), /* Base Price column header */
+.admin-table-toppings td:nth-child(2) {
+  /* Base Price column data */
+  width: 20%; /* Increase Base Price column width */
+  max-width: 70px; /* Optional: limit for prices */
+}
+
+.admin-table-toppings th:nth-child(3), /* Description column header */
+.admin-table-toppings td:nth-child(3) {
+  /* Description column data */
+  width: 20%; /* Significantly increase Description column width */
+}
+
+.admin-table-toppings th:nth-child(4), /* Actions column header */
+.admin-table-toppings td:nth-child(4) {
+  /* Actions column data */
+  width: 20%; /* Keep Actions column roughly the same or adjust */
+}
+
+.admin-table-toppings th:nth-child(5), /* Actions column header */
+.admin-table-toppings td:nth-child(5) {
+  /* Actions column data */
+  width: 20%; /* Keep Actions column roughly the same or adjust */
+}
+
+@media (max-width: 1199px) {
+  .admin-topping-container {
+    padding: 30px;
+    margin: 0px auto;
+  }
+
+    .admin-topping-container h1 {
+      margin-bottom: 25px;
+    }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .edit-button,
+  .delete-button {
+    padding: 6px 10px;
+    font-size: 12px;
+    margin-right: 5px;
+  }
+}
+
+@media (max-width: 991px) {
+  .admin-topping-container {
+    padding: 30px;
+    margin: 0px auto;
+  }
+
+    .admin-topping-container h1 {
+      margin-bottom: 25px;
+    }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .edit-button,
+  .delete-button {
+    padding: 6px 10px;
+    font-size: 12px;
+    margin-right: 5px;
+  }
+}
+
+@media (max-width: 767px) {
+  .admin-topping-container {
+    padding: 15px;
+    margin: 0px auto;
+  }
+
+  .admin-topping-container h1 {
+    margin-bottom: 10px;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .edit-button,
+  .delete-button {
+    padding: 6px 10px;
+    font-size: 12px;
+    margin-right: 5px;
+  }
+}
+
+@media (max-width: 575px) {
+  .admin-topping-container {
+    padding: 5px;
+    margin: 0px auto;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  .admin-table-toppings {
+    margin: 10px auto;
+  }
+  .group-btn-edit-detele {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: auto;
+  }
+
+  /* Modal content adjustments for smaller screens */
+  .modal-content {
+    padding: 20px;
+  }
+
+  form button {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .pagination button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}

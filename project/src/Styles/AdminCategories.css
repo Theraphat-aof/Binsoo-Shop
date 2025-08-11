@@ -1,0 +1,74 @@
+.admin-Categories-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 8px;
+}
+
+.admin-Categories-container h1 {
+  color: #000000;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.admin-table-categories {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.admin-table-categories th,
+.admin-table-categories td {
+  width: 100%;
+  padding: 12px 15px;
+  text-align: left;
+  border-top: 1px solid #ddd;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.admin-table-categories th {
+  background-color: #dc7633;
+  color: #fae5d3;
+  font-weight: bold;
+}
+
+.admin-table-categories tr:hover {
+  background-color: #e9ecef;
+}
+
+.admin-table-categories tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+  border-bottom: none;
+}
+
+.admin-table-categories th:nth-child(1), /* Name column header */
+.admin-table-categories td:nth-child(1) {
+  /* Name column data */
+  width: 20%; /* Reduce Name column width */
+  max-width: 50px; /* Optional: set a max width to ensure it wraps */
+}
+
+.admin-table-categories th:nth-child(2), /* Base Price column header */
+.admin-table-categories td:nth-child(2) {
+  /* Base Price column data */
+  width: 10%; /* Increase Base Price column width */
+  max-width: 100px; /* Optional: limit for prices */
+}
+
+.admin-table-categories th:nth-child(3), /* Description column header */
+.admin-table-categories td:nth-child(3) {
+  /* Description column data */
+  width: 50%; /* Significantly increase Description column width */
+}
+
+.admin-table-categories th:nth-child(4), /* Actions column header */
+.admin-table-categories td:nth-child(4) {
+  /* Actions column data */
+  width: 20%; /* Keep Actions column roughly the same or adjust */
+}

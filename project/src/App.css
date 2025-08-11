@@ -1,0 +1,240 @@
+/* General body styling */
+@import url("https://fonts.googleapis.com/css2?family=Mitr:wght@400&family=Sarabun:wght@400;500;700&display=swap");
+
+body {
+  margin: 0;
+  font-family: "Sarabun", "Mitr", sans-serif;
+  background-color: #eee; /* Light background for the whole page */
+  overflow: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Navigation Bar Styles (Adjusted for bottom position and border-radius) --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #6d3a1e;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin: 20px;
+  width: calc(100% - 40px);
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand a {
+  text-decoration: none;
+  font-size: 1.8em;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand .logo {
+  height: 40px; /* Adjust logo size */
+  margin-right: 10px;
+}
+
+/* .menu-toggle (Removed as requested) */
+
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #eeeeee;
+  font-weight: 600;
+  padding: 5px 0;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links .cart-link {
+  display: flex; /* เพื่อจัดไอคอนให้อยู่ตรงกลางถ้าต้องการ */
+  align-items: center; /* จัดแนวตั้งตรงกลาง */
+  justify-content: center; /* จัดแนวนอนตรงกลาง */
+  padding: 5px 10px; /* เพิ่ม padding ให้มีพื้นที่ */
+}
+
+.nav-links .order-bingsoo-link {
+  display: flex; /* เพื่อจัดไอคอนให้อยู่ตรงกลางถ้าต้องการ */
+  align-items: center; /* จัดแนวตั้งตรงกลาง */
+  justify-content: center; /* จัดแนวนอนตรงกลาง */
+  padding: 5px 10px; /* เพิ่ม padding ให้มีพื้นที่ */
+}
+
+.cart-item-count {
+  position: absolute;
+  top: 0px; /* ปรับตำแหน่งตามต้องการ */
+  right: 0px; /* ปรับตำแหน่งตามต้องการ */
+  background-color: #ff0000; /* สีแดงสำหรับวงกลมแสดงจำนวน */
+  color: white;
+  border-radius: 50%; /* ทำให้เป็นวงกลม */
+  padding: 2px 6px; /* ปรับ padding ให้พอดีกับตัวเลข */
+  font-size: 0.7em; /* ขนาดตัวอักษรเล็กกว่าปกติ */
+  font-weight: bold;
+  min-width: 18px; /* กำหนดความกว้างขั้นต่ำสำหรับวงกลม */
+  height: 18px; /* กำหนดความสูง */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  z-index: 1; /* ตรวจสอบให้ badge อยู่บนไอคอน */
+}
+
+.admin-scrollable-nav-links {
+  display: flex; /* Ensures items are in a row */
+  overflow-x: auto; /* Enables horizontal scrolling */
+  white-space: nowrap; /* Prevents items from wrapping to the next line */
+  -webkit-overflow-scrolling: touch; /* Improves scrolling performance on iOS */
+}
+
+/* Optional: Style the scrollbar for better aesthetics */
+.admin-scrollable-nav-links::-webkit-scrollbar {
+  height: 8px; /* Height of the horizontal scrollbar */
+}
+
+.admin-scrollable-nav-links::-webkit-scrollbar-track {
+  background: #00000000; /* Color of the scrollbar track */
+  border-radius: 10px;
+}
+
+.admin-scrollable-nav-links::-webkit-scrollbar-thumb {
+  background: #00000000; /* Color of the scrollbar thumb */
+  border-radius: 10px;
+}
+
+.admin-scrollable-nav-links::-webkit-scrollbar-thumb:hover {
+  background: #00000000; /* Color when hovering over the scrollbar thumb */
+}
+
+/* If you have specific link styling that pushes items out, adjust here */
+.admin-scrollable-nav-links .nav-links a {
+  flex-shrink: 0; /* Prevents links from shrinking too much */
+  /* Add any other link styles you have */
+}
+
+.welcome-text {
+  color: #000000;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.logout-button {
+  color: #ffffff;
+  background-color: #6d3a1e;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  color: #c9302c;
+}
+
+/* --- Content Area Padding --- */
+.content-area {
+  padding: 20px; /* Default padding for content */
+}
+
+.content-area.no-nav-padding {
+  padding: 0;
+  padding-bottom: 0;
+}
+
+.back-home-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #8a4a2a;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.back-home-link:hover {
+  background-color: #6d3a1e;
+}
+
+/* --- Responsive Navigation (No hamburger menu) --- */
+@media (max-width: 1199px) {
+  .navbar {
+    display: flex;
+    margin: 20px;
+    width: calc(100% - 40px);
+    border-radius: 20px;
+  }
+  .nav-links {
+    width: 100%;
+  }
+  .nav-links a,
+  .nav-links .welcome-text,
+  .nav-links .logout-button {
+    width: auto;
+    padding: 8px;
+  }
+  .content-area {
+    padding-bottom: 100px;
+  }
+}
+
+@media (max-width: 991px) {
+  .navbar {
+    display: flex;
+    margin: 20px;
+    width: calc(100% - 40px);
+    border-radius: 20px;
+  }
+  .nav-links {
+    width: 100%;
+  }
+  .nav-links a,
+  .nav-links .welcome-text,
+  .nav-links .logout-button {
+    width: auto;
+    padding: 8px;
+  }
+  .content-area {
+    padding-bottom: 100px;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar {
+    display: flex;
+    margin: 20px;
+    width: calc(100% - 40px);
+    border-radius: 20px;
+  }
+  .nav-links {
+    width: 100%;
+  }
+  .nav-links a,
+  .nav-links .welcome-text,
+  .nav-links .logout-button {
+    width: auto;
+    padding: 8px;
+  }
+  .content-area {
+    padding-bottom: 100px;
+  }
+}

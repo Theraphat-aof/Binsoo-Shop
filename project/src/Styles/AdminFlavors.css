@@ -1,0 +1,300 @@
+/* src/Styles/FlavorCard.css */
+
+.flavor-cards-container {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(280px, 1fr)
+  ); /* Responsive grid */
+  gap: 20px;
+  padding: 10px 0;
+  justify-content: center; /* Center cards if there are not enough to fill the row */
+}
+
+.admin-page-container h1 {
+  margin: 0;
+  color: #000000;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.add-new-button {
+  margin: 0 10px;
+  background-color: #784212;
+  color: #fae5d3;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.flavor-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  background-color: #fff;
+}
+
+.flavor-card-image-container {
+  width: 100%;
+  height: 200px; /* Fixed height for image container */
+  background-color: #f0f0f0; /* Placeholder background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.flavor-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cover the container */
+  display: block;
+}
+
+.flavor-card-image-placeholder {
+  color: #888;
+  font-size: 1.2em;
+}
+
+.flavor-card-content {
+  padding: 1จpx;
+  flex-grow: 1; /* Allow content to take available space */
+  display: flex;
+  flex-direction: column;
+}
+
+.flavor-card-title {
+  font-size: 1.25em;
+  margin-bottom: ถpx;
+  color: #000000;
+}
+
+.flavor-card-description {
+  font-size: 0.9em;
+  color: #666;
+  line-height: 1.4;
+  margin-bottom: 5px;
+  flex-grow: 1; /* Allow description to take available space */
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flavor-card-actions {
+  display: flex;
+  justify-content: space-between; /* Space out buttons */
+  gap: 10px; /* Gap between buttons */
+  margin-top: auto; /* Push actions to the bottom */
+}
+
+.flavor-card-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  flex: 1; /* Make buttons take equal width */
+}
+
+.flavor-card-actions .edit-button {
+  background-color: #ffd900;
+  color: rgb(112, 84, 5);
+  margin: 0;
+}
+
+.flavor-card-actions .edit-button:hover {
+  background-color: #cfb000;
+}
+
+.flavor-card-actions .delete-button {
+  background-color: #dc3545;
+  color: white;
+  margin: 0;
+}
+
+.flavor-card-actions .delete-button:hover {
+  background-color: #c82333;
+}
+
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  padding: 30px;
+  border-radius: 10px;
+  border: 1px solid #dc7633;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #784212;
+}
+
+.modal-content .form-group {
+  margin-bottom: 15px;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #784212;
+}
+
+.modal-content [type="text"],
+.modal-content textarea {
+  width: calc(100% - 20px); /* Account for padding */
+  padding: 10px;
+  border: 1px solid #dc7633;
+  border-radius: 10px;
+  font-size: 1em;
+}
+
+.modal-content input[type="file"] {
+  padding: 10px; /* Adjust padding */
+  border: 1px solid #dc7633;
+  border-radius: 10px;
+  color: #784212;
+  background-color: #ffffff;
+  cursor: pointer;
+  width: 100%; /* Ensure it takes full width */
+  box-sizing: border-box; /* Include padding/border in width calculation */
+}
+
+.modal-content .current-image-preview {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9em;
+  color: #784212;
+  padding: 5px;
+  background-color: #ffffff;
+  border: 1px solid #dc7633;
+  border-radius: 10px;
+}
+
+.modal-content .current-image-preview img {
+  border: 1px solid #dc7633;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.modal-content label input[type="checkbox"] {
+  /* Specific for checkbox inside label */
+  margin-right: 10px; /* Increased spacing */
+  transform: scale(1.1); /* Slightly larger checkbox */
+  vertical-align: middle; /* Align with text */
+  cursor: pointer;
+}
+
+.modal-content label.checkbox-label {
+  /* Optional: if you want to style the label around the checkbox specifically */
+  display: flex;
+  align-items: center;
+  font-weight: normal; /* Checkbox label might be less bold than other labels */
+  color: #784212;
+}
+
+.modal-content .form-actions {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-content .form-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.modal-content .form-actions button[type="submit"] {
+  background-color: #3ac541;
+  color: #216e25;
+}
+
+.modal-content .form-actions button[type="submit"]:hover {
+  background-color: #279c40;
+  color: #000000;
+}
+
+.modal-content .form-actions button[type="button"] {
+  /* Cancel button */
+  background-color: #ff6767;
+  color: rgb(187, 0, 0);
+}
+
+.modal-content .form-actions button[type="button"]:hover {
+  background-color: #ff3a3a;
+  color: #000000;
+}
+
+/* Pagination styles (if you want to keep them) */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 8px;
+}
+
+.pagination button {
+  padding: 10px 20px;
+  border: 1px solid #007bff;
+  border-radius: 10px;
+  background-color: white;
+  color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #e9f5ff;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.pagination button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 991px) {
+.admin-page-container {
+  padding: 30px !important;
+}
+}
+
+@media (max-width: 575px) {
+  .flavor-cards-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 5px;
+  }
+}

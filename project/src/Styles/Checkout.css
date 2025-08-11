@@ -1,0 +1,239 @@
+/* src/Styles/CheckoutPage.css */
+.checkout-container {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 1200px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.checkout-title {
+    text-align: center;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.error-text {
+    color: red;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.success-message {
+    color: green;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.cart-summary-section {
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px dotted #eee;
+}
+
+.subtotal-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 1.2em;
+    border-top: 1px solid #ddd;
+    margin-top: 10px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+    width: calc(100% - 0px); /* Account for padding */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-textarea {
+    resize: vertical;
+}
+
+.form-select {
+    width: 100%; /* Override calc for select for consistency if needed */
+    background-color: white;
+}
+
+.checkout-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.payment-method-options {
+  display: flex; /* Arranges buttons in a row */
+  gap: 10px; /* Adds space between buttons */
+  margin-bottom: 20px; /* Space below the options */
+  justify-content: center; /* Center the buttons */
+  flex-wrap: wrap; /* Allows buttons to wrap to the next line on smaller screens */
+}
+
+.payment-method-button {
+  padding: 12px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000000;
+  transition: all 0.2s ease-in-out;
+  flex: 1; /* Allow buttons to grow and shrink */
+  min-width: 120px; /* Minimum width for buttons */
+  text-align: center;
+}
+
+.payment-method-button:hover {
+  background-color: #e0e0e0;
+}
+
+.payment-method-button.active {
+  background-color: #ffffff; /* A green color for active state */
+  color: rgb(0, 0, 0);
+  border-color: #0084ff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for active state */
+}
+
+/* Adjust the spacing between form sections if needed */
+.form-label {
+  margin-top: 15px; /* Add some top margin to labels for better spacing */
+  margin-bottom: 5px;
+  display: block; /* Make label a block element to put input on new line */
+  font-weight: bold;
+  color: #555;
+}
+
+.qr-code-container {
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+}
+
+.download-button {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.qr-instructions {
+    text-align: center;
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.payment-info {
+    text-align: center;
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 20px;
+}
+
+.back-to-home-button {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.back-to-cart-button {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #f0ad4e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.error-inline {
+  color: red;
+  font-size: 0.85em;
+  margin-left: 10px; /* ระยะห่างจาก Label */
+  font-weight: normal; /* เพื่อไม่ให้ตัวหนาเกินไป */
+}
+
+.input-error {
+  border-color: red !important; /* ทำให้ขอบเป็นสีแดง */
+  box-shadow: 0 0 0 0.1rem rgba(255, 0, 0, 0.25); /* เพิ่มเงาเล็กน้อย */
+}
+
+
+/* อาจต้องปรับปรุงปุ่ม payment method ด้วยหากมี error */
+.payment-method-button.error {
+    border: 1px solid red;
+}
+
+@media (max-width: 991px) {
+    .checkout-container {
+        padding: 10px;
+    }
+    
+    .checkout-title {
+        font-size: 1.5em;
+    }
+    
+    .form-input,
+    .form-textarea,
+    .form-select {
+        width: calc(100% - 0px); /* Adjust for padding */
+    }
+    
+    .payment-method-options {
+        align-items: center; /* Center buttons */
+    }
+    
+    .payment-method-button {
+        width: 100%; /* Full width on smaller screens */
+        margin-bottom: 10px; /* Space between buttons */
+    }
+}
