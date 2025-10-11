@@ -45,7 +45,6 @@ function AuthFirebase() {
 
           // เรียกใช้ฟังก์ชันใน AuthContext เพื่อจัดการผู้ใช้ Firebase
           await loginWithFirebase(firebaseUser);
-          navigate("/admin");
         }
       } catch (error) {
         // จัดการ Error ที่อาจเกิดขึ้นระหว่างการ Redirect (เช่น unauthorized-domain)

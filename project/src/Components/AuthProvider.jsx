@@ -239,6 +239,7 @@ export const AuthProvider = ({ children }) => {
         photoURL: firebaseUser.photoURL,
       });
       setAuthStatus(data.user, data.token);
+      setLoading(false);
       navigateBasedOnRole(data.user?.role);
       return data;
     } catch (error) {
@@ -264,9 +265,8 @@ export const AuthProvider = ({ children }) => {
         }
         setAuthError(errorMessage);
       }
-      throw error;
-    } finally {
       setLoading(false);
+      throw error;
     }
   };
 
