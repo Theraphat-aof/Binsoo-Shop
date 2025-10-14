@@ -60,13 +60,17 @@ function AuthFirebase() {
   }, [loginWithFirebase, logout, navigate]);
 
   const handleSignOut = async () => {
+    // 1. เคลียร์สถานะใน Context ทันที (ซึ่งจะทำให้ isAuthenticated เป็น false และเปลี่ยนการแสดงผลใน JSX)
+    //    และสั่งนำทางกลับหน้าหลัก/login
+    logout(); 
+    alert("ออกจากระบบสำเร็จ!");
+
     try {
-      await signOut(auth); // สั่ง Firebase Auth ให้ออกจากระบบ
-      alert("ออกจากระบบสำเร็จ!");
-      logout(); // <--- เรียก logout จาก AuthContext เพื่อเคลียร์สถานะใน Context และนำทาง
+      // 2. สั่ง Firebase ให้ออกจากระบบ (Background Task)
+      await signOut(auth); 
     } catch (error) {
-      alert(`ออกจากระบบไม่สำเร็จ: ${error.message}`);
       console.error("Firebase Sign Out Error:", error);
+      // ไม่ต้อง alert ซ้ำ เพราะผู้ใช้ได้รับการยืนยันการ logout แล้ว
     }
   };
 
