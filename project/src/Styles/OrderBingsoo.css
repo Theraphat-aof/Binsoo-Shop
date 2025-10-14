@@ -159,7 +159,7 @@
   grid-template-columns: repeat(
     auto-fit,
     minmax(120px, 1fr)
-  ); /* Smaller grid for toppings */
+  ) !important; 
   margin-bottom: 20px;
   justify-content: center;
 }
@@ -198,7 +198,7 @@
 .topping-selection-area label h4 {
   margin: 0;
   font-size: 1.1em;
-  color: #333;
+  color: #000000;
 }
 
 .topping-card.out-of-stock {
@@ -213,13 +213,13 @@
   font-size: 1.1em;
   color: #784212;
   margin: 0;
+  text-align: left;
 }
 
 .topping-card p {
   font-size: 0.9em;
   color: #784212;
-  text-align: left !important;
-  margin-right: 30px;
+  text-align: left;
   padding: 0;
 }
 
@@ -428,7 +428,7 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   scrollbar-color: #cccccc00 rgb(11, 16, 14, 0);
   width: 90%;
-  max-width: 700px; /* Max width for modal */
+  max-width: 1200px !important; /* Max width for modal */
   position: relative;
   max-height: 90vh; /* Limit modal height */
   overflow-y: auto; /* Enable scrolling if content is too long */
@@ -667,8 +667,8 @@
 .toppings-grid-modal {
   grid-template-columns: repeat(
     auto-fit,
-    minmax(100px, 1fr)
-  ); /* Even smaller grid for options/toppings */
+    minmax(150px, 1fr)
+  ) !important; 
 }
 
 .flavor-actions {
