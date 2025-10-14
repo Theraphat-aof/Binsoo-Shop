@@ -12,7 +12,6 @@ const AdminFinanceDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Define date states
   const [startDate, setStartDate] = useState(() => {
     const today = new Date();
     const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
@@ -28,13 +27,10 @@ const AdminFinanceDashboard = () => {
     return lastDayOfMonth.toISOString().split("T")[0];
   });
 
-  // This date is used for the 12-month report, always based on the current date.
   const currentReportEndDate = new Date().toISOString().split("T")[0];
 
-  // --- Move these functions BEFORE the useEffect hook ---
-
   const fetchFinanceReports = useCallback(async () => {
-    setLoading(true); // Set loading true at the start of fetch
+    setLoading(true); 
     setError(null);
     try {
       const summaryData = await adminFinanceService.getFinanceSummary(
@@ -67,7 +63,7 @@ const AdminFinanceDashboard = () => {
   }, [startDate, endDate]);
 
   const fetchMonthlyFinanceSummary = useCallback(async (endDateForMonthly) => {
-    setLoading(true); // Set loading true at the start of fetch
+    setLoading(true); 
     setError(null);
     try {
       const data = await adminFinanceService.getMonthlyFinanceSummary(
@@ -82,16 +78,13 @@ const AdminFinanceDashboard = () => {
     }
   }, []);
 
-  // --- Now, the useEffect can safely call them ---
   useEffect(() => {
-    // Call both fetch functions
     Promise.all([
       fetchFinanceReports(),
       fetchMonthlyFinanceSummary(currentReportEndDate),
     ])
-      .then(() => setLoading(false)) // Set loading false once all promises resolve
+      .then(() => setLoading(false)) 
       .catch((err) => {
-        // Error is already set within individual fetch functions
         setLoading(false);
         console.error("Error during overall report fetch:", err);
       });
@@ -103,9 +96,6 @@ const AdminFinanceDashboard = () => {
     currentReportEndDate,
   ]);
 
-  // --- Data and Options for ApexCharts (remain the same) ---
-
-  // Donut Chart สำหรับ Income Breakdown
   const incomeDonutChartOptions = {
     labels: incomeBreakdown.map((item) => item.category_name),
     responsive: [
@@ -130,7 +120,7 @@ const AdminFinanceDashboard = () => {
         );
         const percentage =
           (parseFloat(opts.w.globals.series[opts.seriesIndex]) / total) * 100;
-        return `${percentage.toFixed(2)}%`; // แสดงเป็นเปอร์เซ็นต์
+        return `${percentage.toFixed(2)}%`; 
       },
     },
     tooltip: {
@@ -145,14 +135,13 @@ const AdminFinanceDashboard = () => {
         },
       },
     },
-    colors: ["#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800"], // ตัวอย่างสี
+    colors: ["#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800"], 
   };
 
   const incomeDonutChartSeries = incomeBreakdown.map((item) =>
     parseFloat(item.total_amount)
   );
 
-  // Bar Chart สำหรับ Expense Breakdown
   const expenseBarChartOptions = {
     chart: {
       type: "bar",
@@ -160,7 +149,7 @@ const AdminFinanceDashboard = () => {
     },
     plotOptions: {
       bar: {
-        horizontal: true, // ทำให้เป็น Horizontal Bar Chart
+        horizontal: true, 
       },
     },
     xaxis: {
@@ -175,7 +164,7 @@ const AdminFinanceDashboard = () => {
       },
     },
     dataLabels: {
-      enabled: false, // สามารถเปิดใช้งานได้หากต้องการแสดงค่าบนบาร์
+      enabled: false, 
     },
     tooltip: {
       y: {
@@ -184,7 +173,7 @@ const AdminFinanceDashboard = () => {
         },
       },
     },
-    colors: ["#F44336"], // ตัวอย่างสี
+    colors: ["#F44336"], 
   };
 
   const expenseBarChartSeries = [
@@ -194,7 +183,6 @@ const AdminFinanceDashboard = () => {
     },
   ];
 
-  // Column Chart สำหรับ Monthly Income/Expense Summary
   const monthlyColumnChartOptions = {
     chart: {
       type: "bar",

@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-// ฟังก์ชันนี้จะดึง token จาก localStorage และสร้าง Header
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -109,11 +108,7 @@ const productService = {
             throw error;
         }
     },
-  /**
-       * สร้างคำสั่งซื้อ
-       * @param {object} orderDetails
-       * @returns {Promise<object>} 
-       */
+
   createOrder: async (orderDetails) => {
     try {
       const response = await axios.post(`${API_BASE_URL}/orders`, orderDetails, {
@@ -131,12 +126,11 @@ const productService = {
 
       getAllOrders: async (filters = {}) => {
         try {
-            // สร้าง query string จาก filters object
             const queryString = new URLSearchParams(filters).toString();
             const url = `${API_BASE_URL}/orders${queryString ? `?${queryString}` : ''}`;
             
             const response = await axios.get(url, {
-                headers: getAuthHeaders() // ต้องส่ง token ของ Admin ไปด้วย
+                headers: getAuthHeaders() 
             });
             return response.data; 
         } catch (error) {
@@ -145,7 +139,6 @@ const productService = {
         }
     },
 
-    // ดึงรายละเอียดคำสั่งซื้อตาม ID
     getOrderById: async (orderId) => {
         try {
             const response = await axios.get(`${API_BASE_URL}/orders/${orderId}`, {
@@ -158,13 +151,12 @@ const productService = {
         }
     },
 
-    // อัปเดตสถานะคำสั่งซื้อ
     updateOrderStatus: async (orderId, newStatus) => {
         try {
             const response = await axios.put(`${API_BASE_URL}/orders/${orderId}/status`, { status: newStatus }, {
                 headers: {
                     'Content-Type': 'application/json',
-                    ...getAuthHeaders() // ต้องส่ง token ของ Admin
+                    ...getAuthHeaders() 
                 }
             });
             return response.data; 
@@ -174,7 +166,6 @@ const productService = {
         }
     },
 
-    // ฟังก์ชันสำหรับดึงคำสั่งซื้อของ User ที่ login อยู่ (ถ้าคุณจะทำหน้า Order History ของ User ด้วย)
     getMyOrders: async (filters = {}) => {
         try {
             const queryString = new URLSearchParams(filters).toString();

@@ -4,26 +4,25 @@ import productService from "../Components/productService";
 import QRCode from "react-qr-code";
 import generatePayload from "promptpay-qr";
 import { useNavigate } from "react-router-dom";
-import "../Styles/Checkout.css"; // ตรวจสอบให้แน่ใจว่ามี CSS สำหรับ .error-inline
+import "../Styles/Checkout.css"; 
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
   const [cart, setCart] = useState(null);
-  const [loading, setLoading] = useState(true); // แก้ไขตรงนี้
-  const [generalError, setGeneralError] = useState(null); // เปลี่ยนชื่อจาก 'error' เป็น 'generalError'
+  const [loading, setLoading] = useState(true); 
+  const [generalError, setGeneralError] = useState(null); 
 
   const [orderCreated, setOrderCreated] = useState(null);
   const [showQrCode, setShowQrCode] = useState(false);
   const [qrCodeData, setQrCodeData] = useState("");
 
-  const merchantPromptPayId = "0613062691"; // เบอร์โทรศัพท์ PromptPay ของร้านค้า (ตัวอย่าง)
+  const merchantPromptPayId = "0613062691"; 
 
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [contactPhone, setContactPhone] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("PromptPay QR"); // Default to PromptPay QR
+  const [paymentMethod, setPaymentMethod] = useState("PromptPay QR");
   const [notes, setNotes] = useState("");
 
-  // States สำหรับข้อความ Error ของแต่ละฟิลด์
   const [addressError, setAddressError] = useState(null);
   const [phoneError, setPhoneError] = useState(null);
   const [paymentMethodError, setPaymentMethodError] = useState(null);
@@ -56,13 +55,12 @@ const CheckoutPage = () => {
   };
 
   const handleCreateOrder = async () => {
-    // เคลียร์ error เก่าทั้งหมดก่อนตรวจสอบใหม่
     setGeneralError(null);
     setAddressError(null);
     setPhoneError(null);
     setPaymentMethodError(null);
 
-    let hasError = false; // ตัวแปร flag เพื่อตรวจสอบว่ามี error หรือไม่
+    let hasError = false; 
 
     if (!cart || cart.items.length === 0) {
       setGeneralError("Your cart is empty. Cannot create an order.");
@@ -87,7 +85,6 @@ const CheckoutPage = () => {
       hasError = true;
     }
 
-    // หากมี error ใดๆ เกิดขึ้น ให้หยุดการทำงานของฟังก์ชัน
     if (hasError) {
       return;
     }
@@ -289,7 +286,7 @@ const CheckoutPage = () => {
           value={deliveryAddress}
           onChange={(e) => {
             setDeliveryAddress(e.target.value);
-            if (addressError) setAddressError(null); // เคลียร์ error เมื่อผู้ใช้เริ่มพิมพ์
+            if (addressError) setAddressError(null); 
           }}
           placeholder="ใส่หมายเลขโต๊ะ"
           rows="3"
@@ -305,7 +302,7 @@ const CheckoutPage = () => {
             const re = /^[0-9\b]+$/;
             if (e.target.value === '' || (re.test(e.target.value) && e.target.value.length <= 10)) {
                 setContactPhone(e.target.value);
-                if (phoneError) setPhoneError(null); // เคลียร์ error เมื่อผู้ใช้เริ่มพิมพ์
+                if (phoneError) setPhoneError(null); 
             }
           }}
           placeholder="ใส่เบอร์โทรศัพท์ติดต่อ"
@@ -323,7 +320,7 @@ const CheckoutPage = () => {
             }`}
             onClick={() => {
               setPaymentMethod("PromptPay QR");
-              if (paymentMethodError) setPaymentMethodError(null); // เคลียร์ error เมื่อเลือก
+              if (paymentMethodError) setPaymentMethodError(null); 
             }}
           >
             QR พร้อมเพย์
@@ -335,7 +332,7 @@ const CheckoutPage = () => {
             }`}
             onClick={() => {
               setPaymentMethod("Cash");
-              if (paymentMethodError) setPaymentMethodError(null); // เคลียร์ error เมื่อเลือก
+              if (paymentMethodError) setPaymentMethodError(null); 
             }}
           >
             เงินสด

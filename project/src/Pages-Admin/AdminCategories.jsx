@@ -8,15 +8,13 @@ const AdminCategoriesPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // State for the form data (used by both add and edit)
   const [formData, setFormData] = useState({
-    id: "", // Used for edit mode
+    id: "", 
     name: "",
-    type: "income", // Default value
+    type: "income", 
     description: "",
   });
 
-  // Modal states
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
@@ -52,12 +50,11 @@ const AdminCategoriesPage = () => {
         await adminFinanceService.updateCategory(formData.id, formData);
         alert("Category updated successfully!");
       } else {
-        // It's an add operation
         await adminFinanceService.createCategory(formData);
         alert("Category created successfully!");
       }
-      closeModals(); // Close the active modal
-      fetchCategories(); // Refresh data
+      closeModals(); 
+      fetchCategories(); 
     } catch (err) {
       setError(err.message || "Failed to save category.");
       console.error("Error saving category:", err);
@@ -67,7 +64,7 @@ const AdminCategoriesPage = () => {
   };
 
   const handleAddClick = () => {
-    resetForm(); // Clear form for new entry
+    resetForm(); 
     setShowAddModal(true);
   };
 
@@ -88,7 +85,7 @@ const AdminCategoriesPage = () => {
       try {
         await adminFinanceService.deleteCategory(id);
         alert("Category deleted successfully!");
-        fetchCategories(); // Refresh data
+        fetchCategories(); 
       } catch (err) {
         setError(err.message || "Failed to delete category.");
         console.error("Error deleting category:", err);
@@ -110,7 +107,7 @@ const AdminCategoriesPage = () => {
   const closeModals = () => {
     setShowAddModal(false);
     setShowEditModal(false);
-    resetForm(); // Clear form when closing modals
+    resetForm(); 
   };
 
   return (

@@ -108,7 +108,7 @@ const CartPage = () => {
   if (!cart || !cart.items || cart.items.length === 0) {
     return (
       <div className="cart-container">
-        <h2 className="cart-title">ตะกร้าสินค้า</h2> {/* เพิ่มชื่อหัวข้อ */}
+        <h2 className="cart-title">ตะกร้าสินค้า</h2> 
         <p className="cart-empty-message">ตะกร้าของคุณว่างเปล่า!</p>
         {updateMessage && <p className="message-text">{updateMessage}</p>}
       </div>
@@ -123,7 +123,6 @@ const CartPage = () => {
         {cart.items.map((item) => (
           <div key={item.cart_item_id} className="cart-item">
             <div className="item-details">
-              {/* ตรวจสอบว่ามี image_url หรือไม่ก่อนแสดง */}
               {item.image_url && (
                 <img
                   src={`${API_BASE_URL}${item.image_url}`}
@@ -132,11 +131,9 @@ const CartPage = () => {
                 />
               )}
               <div>
-                {/* แสดงชื่อรสชาติและขนาดของบิงซู */}
                 <h3 className="item-name">
                   {item.flavor_name} ({item.size_name})
                 </h3>
-                {/* แสดงท็อปปิ้ง (ถ้ามี) */}
                 {item.toppings && item.toppings.length > 0 && (
                   <p className="item-toppings">
                     Toppings:{" "}
@@ -189,9 +186,6 @@ const CartPage = () => {
         </h3>
         <div>
           {" "}
-          {/*           <button onClick={handleClearCart} className="clear-cart-button">
-            Clear Cart
-          </button> */}
           <button
             onClick={() => navigate("/checkout")}
             className="checkout-button"

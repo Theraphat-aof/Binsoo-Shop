@@ -1,7 +1,7 @@
 // src/pages/AdminToppingsPage.jsx
 import React, { useEffect, useState } from "react";
 import adminProductService from "../Components/productServiceAdmin";
-import "../Styles/AdminToppings.css"; // Make sure this CSS file exists and is linked
+import "../Styles/AdminToppings.css"; 
 
 const AdminToppingsPage = () => {
   const [toppings, setToppings] = useState([]);
@@ -11,9 +11,8 @@ const AdminToppingsPage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 10;
 
-  // State for showing/hiding the modal
   const [showModal, setShowModal] = useState(false);
-  const [editingTopping, setEditingTopping] = useState(null); // Holds the topping being edited
+  const [editingTopping, setEditingTopping] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     price: 0,
@@ -22,12 +21,10 @@ const AdminToppingsPage = () => {
     image: null,
   });
 
-  // Effect to fetch toppings when page changes or on initial load
   useEffect(() => {
     fetchToppings(currentPage);
   }, [currentPage]);
 
-  // Function to fetch toppings from the backend
   const fetchToppings = async (page) => {
     setLoading(true);
     setError(null);
@@ -46,7 +43,6 @@ const AdminToppingsPage = () => {
     }
   };
 
-  // Handle input changes in the form
   const handleInputChange = (e) => {
     const { name, value, type, checked, files } = e.target;
     setFormData((prev) => ({
@@ -62,7 +58,6 @@ const AdminToppingsPage = () => {
     }));
   };
 
-  // Handle form submission (add/edit)
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -88,16 +83,16 @@ const AdminToppingsPage = () => {
         await adminProductService.createTopping(dataToSubmit);
         alert("Topping created successfully!");
       }
-      setShowModal(false); // Hide the modal
-      setEditingTopping(null); // Clear editing topping data
+      setShowModal(false); 
+      setEditingTopping(null); 
       setFormData({
         name: "",
         price: 0,
         stock_quantity: 0,
         is_available: true,
         image: null,
-      }); // Clear form
-      fetchToppings(currentPage); // Refresh topping data
+      }); 
+      fetchToppings(currentPage); 
     } catch (err) {
       console.error("Submit error:", err.response?.data || err.message);
       setError(err.response?.data?.message || "Failed to save topping.");
@@ -106,7 +101,6 @@ const AdminToppingsPage = () => {
     }
   };
 
-  // When Edit button is clicked
   const handleEditClick = (topping) => {
     setEditingTopping(topping);
     setFormData({
@@ -114,12 +108,11 @@ const AdminToppingsPage = () => {
       price: topping.price,
       stock_quantity: topping.stock_quantity,
       is_available: topping.is_available,
-      image: null, // Don't pre-fill image, user can upload new one
+      image: null, 
     });
-    setShowModal(true); // Show the modal
+    setShowModal(true); 
   };
 
-  // When Delete button is clicked
   const handleDeleteClick = async (id) => {
     if (window.confirm("Are you sure you want to delete this topping?")) {
       setLoading(true);
@@ -127,7 +120,7 @@ const AdminToppingsPage = () => {
       try {
         await adminProductService.deleteTopping(id);
         alert("Topping deleted successfully!");
-        fetchToppings(currentPage); // Refresh topping data
+        fetchToppings(currentPage);
       } catch (err) {
         console.error("Delete error:", err.response?.data || err.message);
         setError(err.response?.data?.message || "Failed to delete topping.");
@@ -137,17 +130,16 @@ const AdminToppingsPage = () => {
     }
   };
 
-  // When "Add New Topping" button is clicked
   const handleNewToppingClick = () => {
-    setEditingTopping(null); // Set to null to indicate new creation
+    setEditingTopping(null); 
     setFormData({
       name: "",
       price: 0,
       stock_quantity: 0,
       is_available: true,
       image: null,
-    }); // Clear form
-    setShowModal(true); // Show the modal
+    }); 
+    setShowModal(true); 
   };
 
   return (
@@ -197,31 +189,6 @@ const AdminToppingsPage = () => {
                   required
                 />
               </div>
-              {/* <div className="form-group">
-                <label>Image:</label>
-                <input
-                  type="file"
-                  name="image"
-                  accept="image/*"
-                  onChange={handleInputChange}
-                />
-                {editingTopping &&
-                  editingTopping.image_url &&
-                  !formData.image && (
-                    <p>
-                      Current Image:{" "}
-                      <img
-                        src={editingTopping.image_url}
-                        alt="Current"
-                        style={{
-                          maxWidth: "50px",
-                          maxHeight: "50px",
-                          objectFit: "cover",
-                        }}
-                      />
-                    </p>
-                  )}
-              </div> */}
               <div className="form-group">
                 <label>
                   <input
@@ -261,7 +228,6 @@ const AdminToppingsPage = () => {
               <th>ชื่อ</th>
               <th>ราคา (บาท)</th>
               <th>สต๊อก</th>
-              {/* <th>Image</th> */}
               <th>คำสั่ง</th>
             </tr>
           </thead>
@@ -271,21 +237,6 @@ const AdminToppingsPage = () => {
                 <td>{topping.name}</td>
                 <td>{topping.price}</td>
                 <td>{topping.stock_quantity}</td>
-                {/* <td>
-                  {topping.image_url ? (
-                    <img
-                      src={topping.image_url}
-                      alt={topping.name}
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        objectFit: "cover",
-                      }}
-                    />
-                  ) : (
-                    <span>No Image</span>
-                  )}
-                </td> */}
                 <td className="group-btn-edit-detele">
                   <button
                     onClick={() => handleEditClick(topping)}
