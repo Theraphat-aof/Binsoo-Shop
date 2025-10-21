@@ -304,7 +304,7 @@ export const AuthProvider = ({ children }) => {
           fontSize: "1.2em",
         }}
       >
-        กำลังเข้าสู่ระบบ...
+        โปรดทำการรีเฟรช...
       </div>
     );
   }
