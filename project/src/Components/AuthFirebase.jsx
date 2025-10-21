@@ -1,25 +1,28 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../Components/Firebase"; 
+import { auth } from "../Components/Firebase"; // ตรวจสอบ path อีกครั้งให้ถูกต้อง (อาจจะเป็น ../firebase หรือ ./Firebase)
 import {
   GoogleAuthProvider,
   signInWithRedirect,
   getRedirectResult,
   signOut,
 } from "firebase/auth";
-
-import { useAuth } from "../Components/useAuth"; 
+// ไม่ต้องใช้ useNavigate ที่นี่แล้ว เพราะ AuthContext จะจัดการ
+// ไม่ต้องใช้ useState(user) หรือ useEffect(onAuthStateChanged) ที่นี่แล้ว
+import { useAuth } from "../Components/useAuth"; // <--- นำเข้า useAuth
 
 import { FcGoogle } from "react-icons/fc";
 
 function AuthFirebase() {
-  const { loginWithFirebase, logout, isAuthenticated, user } = useAuth(); 
+  const { loginWithFirebase, logout, isAuthenticated, user } = useAuth(); // ดึงฟังก์ชันและสถานะจาก AuthContext
   const navigate = useNavigate();
 
   const handleGoogleSignIn = async () => {
     try {
       const provider = new GoogleAuthProvider();
+      // สั่ง Redirect ไป Google ทันที
       await signInWithRedirect(auth, provider);
+      // โค้ดที่อยู่ด้านล่างนี้จะไม่รัน เพราะหน้าเว็บจะถูกเปลี่ยนไป
     } catch (error) {
       console.error(`ไม่สามารถเริ่มการล็อกอินด้วย Google ได้: ${error.message}`);
       console.error("Firebase Redirect Sign-In Error:", error);
@@ -29,28 +32,26 @@ function AuthFirebase() {
   useEffect(() => {
     const handleRedirectResult = async () => {
       try {
+        // พยายามดึงผลลัพธ์การล็อกอินจากการ Redirect
         const result = await getRedirectResult(auth);
 
         if (result) {
+          // ถ้ามีผลลัพธ์ แปลว่าผู้ใช้เพิ่งกลับมาจาก Google
           const firebaseUser = result.user;
           // ดึง ID Token เพื่อส่งไปตรวจสอบที่ Backend
           const idToken = await firebaseUser.getIdToken(); 
 
           console.log("ล็อกอินด้วย Google สำเร็จ!");
 
-          // ส่ง ID Token และข้อมูล User ที่จำเป็น
-          await loginWithFirebase({
-              idToken: idToken,
-              uid: firebaseUser.uid,
-              email: firebaseUser.email,
-              displayName: firebaseUser.displayName,
-              photoURL: firebaseUser.photoURL,
-          });
+          // เรียกใช้ฟังก์ชันใน AuthContext เพื่อจัดการผู้ใช้ Firebase
+          await loginWithFirebase(firebaseUser);
         }
       } catch (error) {
-        console.error(`ล็อกอินด้วย Google ไม่สำเร็จ: ${error.message}`);
+        // จัดการ Error ที่อาจเกิดขึ้นระหว่างการ Redirect (เช่น unauthorized-domain)
+        alert(`ล็อกอินด้วย Google ไม่สำเร็จ: ${error.message}`);
         console.error("Firebase Redirect Result Error:", error);
 
+        // หาก Error รุนแรง ควรเรียก logout เพื่อเคลียร์สถานะ local
         logout();
       }
     };
@@ -59,19 +60,23 @@ function AuthFirebase() {
   }, [loginWithFirebase, logout, navigate]);
 
   const handleSignOut = async () => {
+    // 1. เคลียร์สถานะใน Context ทันที (ซึ่งจะทำให้ isAuthenticated เป็น false และเปลี่ยนการแสดงผลใน JSX)
+    //    และสั่งนำทางกลับหน้าหลัก/login
     logout(); 
     console.log("ออกจากระบบสำเร็จ!");
 
     try {
+      // 2. สั่ง Firebase ให้ออกจากระบบ (Background Task)
       await signOut(auth); 
     } catch (error) {
       console.error("Firebase Sign Out Error:", error);
+      // ไม่ต้อง alert ซ้ำ เพราะผู้ใช้ได้รับการยืนยันการ logout แล้ว
     }
   };
 
   return (
     <div>
-      {isAuthenticated && user ? ( 
+      {isAuthenticated && user ? ( // ตรวจสอบจาก AuthContext
         <div>
           <h2>
             ยินดีต้อนรับ, {user.email || user.displayName || user.username}!
@@ -93,6 +98,7 @@ function AuthFirebase() {
               borderRadius: "10px",
               fontSize: "16px",
               cursor: "pointer",
+              // ไม่สามารถใช้ :hover หรือ :active ได้โดยตรงใน inline styles
             }}
           >
             <FcGoogle size={30} />

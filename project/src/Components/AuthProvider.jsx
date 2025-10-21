@@ -293,6 +293,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // เงื่อนไขการแสดง loading: แสดงเมื่อ loading เป็น true และไม่มีข้อผิดพลาดที่ต้องแสดง
   if (loading && !authError) {
     return (
       <div
@@ -304,7 +305,7 @@ export const AuthProvider = ({ children }) => {
           fontSize: "1.2em",
         }}
       >
-        โปรดทำการรีเฟรช...
+        โปรดรอสักครู่...
       </div>
     );
   }

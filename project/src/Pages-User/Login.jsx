@@ -16,6 +16,7 @@ const Login = () => {
   const location = useLocation();
   const { login, authError, setAuthError, loading } = useAuth(); 
 
+  // Effect เพื่อจัดการข้อความ Error จาก AuthProvider หรือ Location State
   useEffect(() => {
     let errorMessageToDisplay = null;
 
@@ -33,6 +34,7 @@ const Login = () => {
       setDisplayError("");
     }
 
+    // ตั้งเวลาเพื่อเคลียร์ข้อความ error หากมีข้อความแสดงอยู่
     let timer;
     if (errorMessageToDisplay) {
       timer = setTimeout(() => {
@@ -97,6 +99,7 @@ const Login = () => {
       </div>
       <form onSubmit={handleSubmit} className="login-form">
         <h1>ยินดีต้อนรับ</h1>
+        {/* แสดงข้อความ error message ที่นี่ */}
         {displayError && <p className="error-message">{displayError}</p>}
         <div>
           <label>ชื่อผู้ใช้</label>

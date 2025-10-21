@@ -1,9 +1,11 @@
 // src/Context/CartProvider.jsx
+
 import React, { useState, useEffect, useCallback } from 'react';
 import productService from '../Components/productService';
 import { useAuth } from '../Components/useAuth';
 import { CartContext } from "../Components/cart-context-object"
 
+// Provider Component (now the sole export of this file, besides default)
 export const CartProvider = ({ children }) => {
   const { isAuthenticated, user } = useAuth();
   const [cartItemCount, setCartItemCount] = useState(0);

@@ -1,7 +1,9 @@
 // src/hooks/useAuth.js
+
 import { useContext } from 'react';
 import { AuthContext } from "../Components/AuthContext";
 
+// Hook ที่กำหนดเองเพื่อความสะดวกในการใช้งาน AuthContext
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {

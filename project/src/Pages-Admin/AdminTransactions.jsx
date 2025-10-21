@@ -5,12 +5,13 @@ import "../Styles/AdminTransactions.css";
 
 const AdminTransactionsPage = () => {
   const [transactions, setTransactions] = useState([]);
-  const [categories, setCategories] = useState([]); 
+  const [categories, setCategories] = useState([]); // สำหรับ dropdown เลือกหมวดหมู่
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // State สำหรับ Filter และ Pagination
   const [filters, setFilters] = useState({
-    type: "", 
+    type: "", // 'income', 'expense', หรือว่างเปล่าสำหรับทั้งหมด
     category_id: "",
     startDate: "",
     endDate: "",
@@ -20,21 +21,23 @@ const AdminTransactionsPage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
 
+  // State สำหรับฟอร์มการเพิ่ม/แก้ไขรายการ
   const [formData, setFormData] = useState({
-    id: "", 
-    type: "income", 
+    id: "", // ใช้สำหรับโหมดแก้ไข
+    type: "income", // ค่าเริ่มต้น
     category_id: "",
     amount: "",
     description: "",
     transaction_date: "",
-    order_id: "", 
+    order_id: "", // อาจจะใส่ค่าว่างหรือ null
   });
   const [isEditing, setIsEditing] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [isModalOpen, setIsModalOpen] = useState(false); // New state for modal visibility
 
+  // Effect สำหรับดึงรายการ Transaction และ Categories
   useEffect(() => {
     fetchTransactions();
-  }, [filters]); 
+  }, [filters]); // ดึงข้อมูลใหม่เมื่อ filters เปลี่ยน
 
   useEffect(() => {
     fetchCategoriesForDropdown();
@@ -60,11 +63,13 @@ const AdminTransactionsPage = () => {
     try {
       const data = await adminFinanceService.getCategories();
       setCategories(data);
+      // ตั้งค่า category_id เริ่มต้น หากมี
       if (data.length > 0 && !formData.category_id) {
         setFormData((prev) => ({ ...prev, category_id: data[0].id }));
       }
     } catch (err) {
       console.error("Failed to load categories for dropdown:", err);
+      // ไม่ต้องแสดง error message ใหญ่โต ถ้าแค่ dropdown โหลดไม่ได้
     }
   };
 
@@ -75,7 +80,7 @@ const AdminTransactionsPage = () => {
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-    setFilters((prev) => ({ ...prev, [name]: value, page: 1 })); 
+    setFilters((prev) => ({ ...prev, [name]: value, page: 1 })); // Reset page to 1 on filter change
   };
 
   const handlePageChange = (newPage) => {
@@ -89,8 +94,8 @@ const AdminTransactionsPage = () => {
     try {
       const transactionData = {
         ...formData,
-        amount: parseFloat(formData.amount), 
-        order_id: formData.order_id === "" ? null : formData.order_id, 
+        amount: parseFloat(formData.amount), // แปลงเป็นตัวเลข
+        order_id: formData.order_id === "" ? null : formData.order_id, // แปลงเป็น null ถ้าว่างเปล่า
       };
 
       if (isEditing) {
@@ -104,8 +109,8 @@ const AdminTransactionsPage = () => {
         alert("Transaction created successfully!");
       }
       resetForm();
-      fetchTransactions();
-      setIsModalOpen(false);
+      fetchTransactions(); // รีเฟรชข้อมูล
+      setIsModalOpen(false); // Close modal after successful submission
     } catch (err) {
       setError(err.message || "Failed to save transaction.");
       console.error("Error saving transaction:", err);
@@ -115,7 +120,7 @@ const AdminTransactionsPage = () => {
   };
 
   const handleAddClick = () => {
-    resetForm(); 
+    resetForm(); // Ensure form is clear for new entry
     setIsModalOpen(true);
   };
 
@@ -128,11 +133,11 @@ const AdminTransactionsPage = () => {
       description: transaction.description || "",
       transaction_date: new Date(transaction.transaction_date)
         .toISOString()
-        .split("T")[0], 
+        .split("T")[0], // แปลงเป็น YYYY-MM-DD
       order_id: transaction.order_id || "",
     });
     setIsEditing(true);
-    setIsModalOpen(true); 
+    setIsModalOpen(true); // Open modal for editing
   };
 
   const handleDeleteClick = async (id) => {
@@ -142,7 +147,7 @@ const AdminTransactionsPage = () => {
       try {
         await adminFinanceService.deleteTransaction(id);
         alert("Transaction deleted successfully!");
-        fetchTransactions(); 
+        fetchTransactions(); // รีเฟรชข้อมูล
       } catch (err) {
         setError(err.message || "Failed to delete transaction.");
         console.error("Error deleting transaction:", err);
@@ -167,14 +172,16 @@ const AdminTransactionsPage = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    resetForm(); 
+    resetForm(); // Clear form when closing modal
   };
 
+  // Filter categories based on selected transaction type for the form
   const filteredCategories = categories.filter(
     (cat) => cat.type === formData.type
   );
+  // Filter options for the main transaction list filter
   const filterOptionsCategories = categories.filter((cat) => {
-    if (!filters.type) return true; 
+    if (!filters.type) return true; // Show all if no type filter
     return cat.type === filters.type;
   });
 

@@ -12,7 +12,7 @@ const AdminFlavorsPage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 10;
 
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false); // Changed from showForm to showModal
   const [editingFlavor, setEditingFlavor] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -73,7 +73,7 @@ const AdminFlavorsPage = () => {
         await adminProductService.createFlavor(dataToSubmit);
         alert("Flavor created successfully!");
       }
-      setShowModal(false); 
+      setShowModal(false); // Close the modal
       setEditingFlavor(null);
       setFormData({
         name: "",
@@ -96,9 +96,9 @@ const AdminFlavorsPage = () => {
       name: flavor.name,
       description: flavor.description || "",
       is_available: flavor.is_available,
-      image: null,
+      image: null, // Image input should be cleared for new selection
     });
-    setShowModal(true); 
+    setShowModal(true); // Open the modal
   };
 
   const handleDeleteClick = async (id) => {
@@ -121,7 +121,7 @@ const AdminFlavorsPage = () => {
   const handleNewFlavorClick = () => {
     setEditingFlavor(null);
     setFormData({ name: "", description: "", is_available: true, image: null });
-    setShowModal(true); 
+    setShowModal(true); // Open the modal
   };
 
   return (
@@ -192,7 +192,7 @@ const AdminFlavorsPage = () => {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setShowModal(false)} 
+                  onClick={() => setShowModal(false)} // Close modal
                   disabled={loading}
                 >
                   ยกเลิก

@@ -6,7 +6,7 @@ import productService from "../Components/productService";
 import "../Styles/OrderDetail.css";
 
 const OrderDetailPage = () => {
-  const { id: orderId } = useParams(); 
+  const { id: orderId } = useParams(); // ดึง orderId จาก URL parameters
 
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,6 +16,7 @@ const OrderDetailPage = () => {
   const [updateStatusError, setUpdateStatusError] = useState(null);
   const [updateStatusSuccess, setUpdateStatusSuccess] = useState(null);
 
+  // สถานะที่ Backend รองรับ (ควรตรงกับ validStatuses ใน Backend Controller)
   const validStatuses = ["pending", "paid", "completed", "cancelled"];
 
   const fetchOrderDetails = async () => {
@@ -24,7 +25,7 @@ const OrderDetailPage = () => {
     try {
       const response = await productService.getOrderById(orderId);
       setOrder(response.order);
-      setCurrentStatus(response.order.status); 
+      setCurrentStatus(response.order.status); // ตั้งสถานะปัจจุบันจากข้อมูลที่ดึงมา
     } catch (err) {
       setError(
         "Failed to fetch order details: " + (err.message || "Unknown error")
@@ -37,12 +38,12 @@ const OrderDetailPage = () => {
 
   useEffect(() => {
     fetchOrderDetails();
-  }, [orderId]); 
+  }, [orderId]); // ดึงข้อมูลใหม่เมื่อ orderId ใน URL เปลี่ยน
 
   const handleStatusChange = (e) => {
     setCurrentStatus(e.target.value);
-    setUpdateStatusSuccess(null); 
-    setUpdateStatusError(null); 
+    setUpdateStatusSuccess(null); // ล้างข้อความสำเร็จเมื่อเปลี่ยนสถานะ
+    setUpdateStatusError(null); // ล้างข้อความ error เมื่อเปลี่ยนสถานะ
   };
 
   const handleUpdateStatus = async () => {
@@ -57,6 +58,7 @@ const OrderDetailPage = () => {
       setUpdateStatusSuccess(
         response.message || "Order status updated successfully!"
       );
+      // ถ้าอัปเดตสำเร็จ ให้ดึงข้อมูล Order ใหม่เพื่อแสดงสถานะล่าสุด
       await fetchOrderDetails();
     } catch (err) {
       setUpdateStatusError(

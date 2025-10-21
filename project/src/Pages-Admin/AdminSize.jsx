@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import adminProductService from "../Components/productServiceAdmin";
-import "../Styles/AdminSize.css";
+import "../Styles/AdminSize.css"; // Make sure this path is correct
 
 const AdminSizesPage = () => {
   const [sizes, setSizes] = useState([]);
@@ -10,8 +10,9 @@ const AdminSizesPage = () => {
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 10;
 
-  const [showModal, setShowModal] = useState(false); 
-  const [editingSize, setEditingSize] = useState(null); 
+  // State สำหรับ Modal
+  const [showModal, setShowModal] = useState(false); // Controls modal visibility
+  const [editingSize, setEditingSize] = useState(null); // Stores size data being edited
   const [formData, setFormData] = useState({
     name: "",
     base_price: 0,
@@ -67,7 +68,7 @@ const AdminSizesPage = () => {
         await adminProductService.createSize(dataToSubmit);
         alert("Size created successfully!");
       }
-      setShowModal(false);
+      setShowModal(false); // Close modal
       setEditingSize(null);
       setFormData({ name: "", base_price: 0, description: "" });
       fetchSizes(currentPage);
@@ -86,7 +87,7 @@ const AdminSizesPage = () => {
       base_price: size.base_price,
       description: size.description || "",
     });
-    setShowModal(true);
+    setShowModal(true); // Open modal
   };
 
   const handleDeleteClick = async (id) => {
@@ -109,7 +110,7 @@ const AdminSizesPage = () => {
   const handleNewSizeClick = () => {
     setEditingSize(null);
     setFormData({ name: "", base_price: 0, description: "" });
-    setShowModal(true); 
+    setShowModal(true); // Open modal
   };
 
   return (

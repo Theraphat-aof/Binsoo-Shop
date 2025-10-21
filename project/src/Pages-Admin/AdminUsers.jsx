@@ -9,12 +9,13 @@ const AdminUsersPage = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const itemsPerPage = 10; 
+  const itemsPerPage = 10; // กำหนดจำนวนผู้ใช้ต่อหน้า
 
+  // State สำหรับ Modal/Form ในการแก้ไข Role
   const [showEditModal, setShowEditModal] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null); 
-  const [newRole, setNewRole] = useState(""); 
-  const [blockStatus, setBlockStatus] = useState(false); 
+  const [currentUser, setCurrentUser] = useState(null); // ผู้ใช้ที่กำลังแก้ไข
+  const [newRole, setNewRole] = useState(""); // Role ใหม่ที่เลือก
+  const [blockStatus, setBlockStatus] = useState(false); // สถานะการบล็อกใหม่
 
   useEffect(() => {
     fetchUsers(currentPage);
@@ -40,13 +41,15 @@ const AdminUsersPage = () => {
     }
   };
 
+  // เปิด Modal แก้ไขข้อมูลผู้ใช้
   const handleEditUserClick = (user) => {
     setCurrentUser(user);
-    setNewRole(user.role); 
-    setBlockStatus(user.isBlocked); 
+    setNewRole(user.role); // ตั้งค่า role ปัจจุบัน
+    setBlockStatus(user.isBlocked); // ตั้งค่า block status ปัจจุบัน
     setShowEditModal(true);
   };
 
+  // ปิด Modal
   const handleCloseModal = () => {
     setShowEditModal(false);
     setCurrentUser(null);
@@ -54,6 +57,7 @@ const AdminUsersPage = () => {
     setBlockStatus(false);
   };
 
+  // ส่งการเปลี่ยนแปลง role หรือ block status ไปยัง Backend
   const handleUpdateUser = async () => {
     if (!currentUser) return;
 
@@ -66,7 +70,7 @@ const AdminUsersPage = () => {
       });
       alert("User updated successfully!");
       handleCloseModal();
-      fetchUsers(currentPage); 
+      fetchUsers(currentPage); // รีเฟรชข้อมูลผู้ใช้
     } catch (err) {
       console.error("Update user error:", err.response?.data || err.message);
       setError(err.response?.data?.message || "Failed to update user.");
@@ -75,6 +79,7 @@ const AdminUsersPage = () => {
     }
   };
 
+  // ลบผู้ใช้
   const handleDeleteUser = async (userId) => {
     if (
       window.confirm(
@@ -112,6 +117,7 @@ const AdminUsersPage = () => {
               <th>ชื่อผู้ใช้</th>
               <th>อีเมล</th>
               <th>บทบาท</th>
+              {/* <th>Status</th> */}
               <th>คำสั่ง</th>
             </tr>
           </thead>
@@ -122,6 +128,7 @@ const AdminUsersPage = () => {
                 <td>{user.username}</td>
                 <td>{user.email}</td>
                 <td>{user.role}</td>
+                {/* <td>{user.isBlocked ? "Blocked" : "Active"}</td> */}
                 <td className='group-btn-edit-detele'>
                   <button
                     onClick={() => handleEditUserClick(user)}

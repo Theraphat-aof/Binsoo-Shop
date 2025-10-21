@@ -10,6 +10,7 @@ const MyOrdersPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // สถานะสำหรับ Filter และ Pagination (ถ้าต้องการให้ User Filter Order ตัวเองได้)
     const [filters, setFilters] = useState({
         status: '', 
         page: 1,
@@ -27,6 +28,7 @@ const MyOrdersPage = () => {
             setLoading(true);
             setError(null);
             try {
+                // เรียกใช้ API เพื่อดึง Order ของ User ที่ Login อยู่
                 const response = await productService.getMyOrders(filters);
                 setOrders(response.orders);
                 setPagination({
@@ -36,6 +38,7 @@ const MyOrdersPage = () => {
                     itemsPerPage: response.itemsPerPage
                 });
             } catch (err) {
+                // ตรวจสอบ error.response?.status เพื่อจัดการการไม่อนุญาต (เช่น ถ้า token หมดอายุ)
                 if (err.response && err.response.status === 401) {
                     setError('Please log in to view your orders.');
                 } else {
@@ -48,7 +51,7 @@ const MyOrdersPage = () => {
         };
 
         fetchMyOrders();
-    }, [filters]); 
+    }, [filters]); // ให้ fetchMyOrders ทำงานใหม่เมื่อ filters เปลี่ยนแปลง
 
     const handlePageChange = (newPage) => {
         setFilters(prevFilters => ({ ...prevFilters, page: newPage }));
@@ -58,7 +61,7 @@ const MyOrdersPage = () => {
         setFilters(prevFilters => ({
             ...prevFilters,
             [e.target.name]: e.target.value,
-            page: 1 
+            page: 1 // Reset page to 1 when filters change
         }));
     };
 
@@ -112,7 +115,12 @@ const MyOrdersPage = () => {
                                 <td><span className={`status-${order.status.toLowerCase()}`}>{order.status}</span></td>
                                 <td>{new Date(order.order_date).toLocaleString()}</td>
                                 <td>
+                                    {/* User สามารถดูรายละเอียด Order ของตัวเองได้ */}
                                     <Link to={`/my-orders/${order.id}`} className="view-details-btn">View Details</Link>
+                                    {/* ตัวอย่างปุ่มยกเลิก (ต้องมี logic ใน Backend รองรับด้วย) */}
+                                    {/* {order.status === 'pending' && (
+                                        <button className="cancel-order-btn" onClick={() => handleCancelOrder(order.id)}>Cancel</button>
+                                    )} */}
                                 </td>
                             </tr>
                         ))}

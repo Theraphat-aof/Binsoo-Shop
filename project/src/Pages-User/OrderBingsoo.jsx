@@ -24,9 +24,9 @@ const OrderBingsoo = () => {
   const [selectedFlavorForOrder, setSelectedFlavorForOrder] = useState(null);
 
   const [modalSelectedSize, setModalSelectedSize] = useState(null);
-  const [modalSelectedToppings, setModalSelectedToppings] = useState([]); 
+  const [modalSelectedToppings, setModalSelectedToppings] = useState([]); // [{ id, quantity }]
   const [modalBingsooQuantity, setModalBingsooQuantity] = useState(1);
-  const [modalCurrentPrice, setModalCurrentPrice] = useState(0); 
+  const [modalCurrentPrice, setModalCurrentPrice] = useState(0); // This is the state for the price calculation
   const [modalAddToCartMessage, setModalAddToCartMessage] = useState("");
 
   useEffect(() => {
@@ -88,14 +88,17 @@ const OrderBingsoo = () => {
     fetchData();
   }, []);
 
+  // Recalculate price whenever selected size, toppings, or quantity changes
   useEffect(() => {
     let price = 0;
     if (modalSelectedSize) {
       price += parseFloat(modalSelectedSize.base_price);
     }
+    // Only count selected toppings that are not out of stock
     modalSelectedToppings.forEach((st) => {
       const topping = toppings.find((t) => t.id === st.id);
       if (topping && topping.stock_quantity > 0) {
+        // Ensure topping is not out of stock
         price += parseFloat(topping.price) * st.quantity;
       }
     });
@@ -127,18 +130,21 @@ const OrderBingsoo = () => {
   };
 
   const handleModalToppingToggle = (topping) => {
+    // Only allow toggling if the topping is in stock
     if (topping.stock_quantity <= 0) {
-      return;
+      return; // Do nothing if out of stock
     }
 
     const existingTopping = modalSelectedToppings.find(
       (st) => st.id === topping.id
     );
     if (existingTopping) {
+      // If already selected, remove it
       setModalSelectedToppings(
         modalSelectedToppings.filter((st) => st.id !== topping.id)
       );
     } else {
+      // If not selected, add it with quantity 1
       setModalSelectedToppings([
         ...modalSelectedToppings,
         { id: topping.id, quantity: 1 },
@@ -282,7 +288,7 @@ const OrderBingsoo = () => {
                           name="selectedTopping"
                           checked={isToppingSelected}
                           onChange={() => handleModalToppingToggle(topping)}
-                          disabled={isOutOfStock} 
+                          disabled={isOutOfStock} // ปิดการใช้งาน checkbox ถ้าหมดสต็อก
                         />
                         <label htmlFor={`topping-${topping.id}`}>
                           <h4>{topping.name}</h4>

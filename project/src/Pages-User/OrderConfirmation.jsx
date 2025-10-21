@@ -6,14 +6,16 @@ import QRCode from "react-qr-code";
 import "../Styles/OrderConfirmation.css";
 
 const OrderConfirmationPage = () => {
-  const location = useLocation(); 
+  const location = useLocation(); // ใช้สำหรับเข้าถึง state ที่ส่งมาจาก navigate
   const navigate = useNavigate();
 
+  // ดึงข้อมูล order, paymentMethod, qrCodeData จาก state ของ navigate
   const { order, paymentMethod, qrCodeData } = location.state || {};
 
+  // หากไม่มีข้อมูล order (เช่น เข้าหน้านี้โดยตรง ไม่ได้มาจาก Checkout) ให้ redirect กลับ
   useEffect(() => {
     if (!order) {
-      navigate("/");
+      navigate("/"); // หรือไปยังหน้า Cart/Home
     }
   }, [order, navigate]);
 
@@ -57,6 +59,27 @@ const OrderConfirmationPage = () => {
 
   return (
     <div className="confirmation-container">
+      {/* <div className="order-summary-box">
+        <h3>สรุปคำสั่งซื้อ</h3>
+        <p>
+          <strong>ราคารวม</strong> ฿{" "}
+          {order.total_amount ? order.total_amount.toFixed(2) : "0.00"}
+        </p>
+        <p>
+          <strong>ชำระเงินโดย</strong> {order.payment_method}
+        </p>
+        <p>
+          <strong>ที่นั่ง</strong> {order.delivery_address}
+        </p>
+        <p>
+          <strong>เบอร์โทรศัพท์</strong> {order.contact_phone || "N/A"}
+        </p>
+        {order.notes && (
+          <p>
+            <strong>รายละเอียดเพิ่มเติม</strong> {order.notes}
+          </p>
+        )}
+      </div> */}
 
       {paymentMethod === "PromptPay QR" && qrCodeData ? (
         <div className="payment-qr-section">
@@ -69,7 +92,7 @@ const OrderConfirmationPage = () => {
               id="promptpay-qr-code-canvas"
               value={qrCodeData}
               size={256}
-              level="H" 
+              level="H" // ระดับการแก้ไขข้อผิดพลาด
             />
           </div>
           <button onClick={handleDownloadQrCode} className="download-qr-button">
@@ -95,6 +118,9 @@ const OrderConfirmationPage = () => {
       )}
 
       <div className="next-steps-section">
+        {/* <p>
+          You can track your order status in your <Link to="/my-orders">My Orders</Link> section.
+        </p> */}
         <button
           onClick={() => navigate("/order-bingsoo")}
           className="back-to-home-button"

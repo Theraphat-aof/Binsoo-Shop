@@ -1,4 +1,5 @@
 // src/pages/OrderListPage.jsx
+
 import React, { useEffect, useState } from "react";
 import productService from "../Components/productService";
 import { Link } from "react-router-dom";
@@ -27,6 +28,7 @@ const OrderListPage = () => {
       setLoading(true);
       setError(null);
       try {
+        // เรียกใช้ API เพื่อดึง Order ทั้งหมด
         const response = await productService.getAllOrders(filters);
         setOrders(response.orders);
         setPagination({
@@ -44,7 +46,7 @@ const OrderListPage = () => {
     };
 
     fetchOrders();
-  }, [filters]); 
+  }, [filters]); // ให้ fetchOrders ทำงานใหม่เมื่อ filters เปลี่ยนแปลง
 
   const handlePageChange = (newPage) => {
     setFilters((prevFilters) => ({ ...prevFilters, page: newPage }));
@@ -54,7 +56,7 @@ const OrderListPage = () => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       [e.target.name]: e.target.value,
-      page: 1, 
+      page: 1, // Reset page to 1 when filters change
     }));
   };
 
@@ -82,10 +84,24 @@ const OrderListPage = () => {
             <option value="">ทั้งหมด</option>
             <option value="pending">รอดำเนินการ</option>
             <option value="paid">ชำระเงินแล้ว</option> 
+            {/* หรือ ready_for_pickup */}
             <option value="completed">สำเร็จ</option>
             <option value="cancelled">ยกเลิก</option>
           </select>
         </label>
+        {/* สามารถเพิ่ม filter อื่นๆ ได้ เช่น user ID, total amount range */}
+        {/*
+                <label>
+                    User ID:
+                    <input
+                        type="text"
+                        name="userId"
+                        value={filters.userId}
+                        onChange={handleFilterChange}
+                        placeholder="Filter by User ID"
+                    />
+                </label>
+                */}
       </div>
 
       {/* Order Table */}
@@ -96,6 +112,7 @@ const OrderListPage = () => {
           <thead>
             <tr>
               <th>รายการที่</th>
+              {/* <th>ลูกค้า ไอดี</th> */}
               <th>ราคารวม (บาท)</th>
               <th>สถานะ</th>
               <th>วันที่ทำรายการ</th>
@@ -108,6 +125,7 @@ const OrderListPage = () => {
             {orders.map((order) => (
               <tr key={order.id}>
                 <td data-label="Order ID">{order.id}</td>
+                {/* <td data-label="User ID">{order.user_id || "N/A"}</td> */}
                 <td data-label="Total Amount">
                   {parseFloat(order.total_amount).toFixed(2)}
                 </td>
