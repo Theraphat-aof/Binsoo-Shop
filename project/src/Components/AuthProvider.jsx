@@ -303,7 +303,7 @@ export const AuthProvider = ({ children }) => {
           fontSize: "1.2em",
         }}
       >
-        โปรดทำการรีเฟรช...
+        กำลังเข้าสู่ระบบ...
       </div>
     );
   }
