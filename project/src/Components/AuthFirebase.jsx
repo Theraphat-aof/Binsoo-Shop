@@ -1,5 +1,3 @@
-// src/components/AuthFirebase.jsx
-
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../Components/Firebase"; 
@@ -23,7 +21,7 @@ function AuthFirebase() {
       const provider = new GoogleAuthProvider();
       await signInWithRedirect(auth, provider);
     } catch (error) {
-      alert(`ไม่สามารถเริ่มการล็อกอินด้วย Google ได้: ${error.message}`);
+      console.error(`ไม่สามารถเริ่มการล็อกอินด้วย Google ได้: ${error.message}`);
       console.error("Firebase Redirect Sign-In Error:", error);
     }
   };
@@ -35,13 +33,22 @@ function AuthFirebase() {
 
         if (result) {
           const firebaseUser = result.user;
+          // ดึง ID Token เพื่อส่งไปตรวจสอบที่ Backend
+          const idToken = await firebaseUser.getIdToken(); 
 
-          alert("ล็อกอินด้วย Google สำเร็จ!");
+          console.log("ล็อกอินด้วย Google สำเร็จ!");
 
-          await loginWithFirebase(firebaseUser);
+          // ส่ง ID Token และข้อมูล User ที่จำเป็น
+          await loginWithFirebase({
+              idToken: idToken,
+              uid: firebaseUser.uid,
+              email: firebaseUser.email,
+              displayName: firebaseUser.displayName,
+              photoURL: firebaseUser.photoURL,
+          });
         }
       } catch (error) {
-        alert(`ล็อกอินด้วย Google ไม่สำเร็จ: ${error.message}`);
+        console.error(`ล็อกอินด้วย Google ไม่สำเร็จ: ${error.message}`);
         console.error("Firebase Redirect Result Error:", error);
 
         logout();
@@ -53,7 +60,7 @@ function AuthFirebase() {
 
   const handleSignOut = async () => {
     logout(); 
-    alert("ออกจากระบบสำเร็จ!");
+    console.log("ออกจากระบบสำเร็จ!");
 
     try {
       await signOut(auth); 

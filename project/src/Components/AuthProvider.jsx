@@ -239,6 +239,7 @@ export const AuthProvider = ({ children }) => {
         photoURL: firebaseUser.photoURL,
       });
       setAuthStatus(data.user, data.token);
+      console.log("User Role from Backend:", data.user?.role);
       setLoading(false);
       navigateBasedOnRole(data.user?.role);
       return data;
