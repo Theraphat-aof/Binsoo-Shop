@@ -210,7 +210,7 @@ const OrderBingsoo = () => {
           >
             {flavor.image_url ? (
               <img
-                src={`${API_BASE_URL}${flavor.image_url}`}
+                src={flavor.image_url}
                 alt={flavor.name}
                 className="flavor-image"
               />
