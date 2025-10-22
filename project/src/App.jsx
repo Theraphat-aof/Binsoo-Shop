@@ -13,7 +13,6 @@ import Login from "./Pages-User/Login";
 import { useAuth } from "./Components/useAuth";
 import ProtectedRoute from "./Components/ProtectedRoute";
 
-import { CartProvider } from "./Components/CartContext";
 import { useCart } from "./Components/useCart"; // Corrected path based on previous conversation
 
 import UserProfile from "./Pages-User/UserProfile";
@@ -68,7 +67,6 @@ function AppContent() {
   // The navbar should be hidden if it's a login/register page OR if it's an admin path
   const shouldHideNavbar = isLoginPage || isRegisterPage || isAdminPath;
 
-
   const renderNavLinks = () => (
     <>
       {isAuthenticated && (
@@ -98,7 +96,7 @@ function AppContent() {
             </>
           )}
           {user?.role === "admin" && (
-            <div className="admin-scrollable-nav-links">
+            <>
               <Link
                 to="/admin"
                 className={activeLink === "/admin" ? "active-nav-link" : ""}
@@ -125,7 +123,9 @@ function AppContent() {
               </Link>
               <Link
                 to="/admin/sizes"
-                className={activeLink === "/admin/sizes" ? "active-nav-link" : ""}
+                className={
+                  activeLink === "/admin/sizes" ? "active-nav-link" : ""
+                }
               >
                 Sizes
               </Link>
@@ -167,11 +167,13 @@ function AppContent() {
               </Link>
               <Link
                 to="/admin/finance"
-                className={activeLink === "/admin/finance" ? "active-nav-link" : ""}
+                className={
+                  activeLink === "/admin/finance" ? "active-nav-link" : ""
+                }
               >
                 Finance
               </Link>
-            </div>
+            </>
           )}
           <button onClick={handleLogout} className="logout-button">
             <FaSignOutAlt size={30} />
@@ -188,14 +190,20 @@ function AppContent() {
         <nav className="navbar">
           <div className="navbar-brand"></div>
           {/* Apply admin-specific scrolling class here, not in renderNavLinks */}
-          <div className={`nav-links ${user?.role === "admin" ? "admin-scrollable" : ""}`}>
+          <div
+            className={`nav-links ${
+              user?.role === "admin" ? "admin-scrollable" : ""
+            }`}
+          >
             {renderNavLinks()}
           </div>
         </nav>
       )}
 
       {/* Adjust content padding based on whether the navbar is present */}
-      <div className={`content-area ${shouldHideNavbar ? "no-nav-padding" : ""}`}>
+      <div
+        className={`content-area ${shouldHideNavbar ? "no-nav-padding" : ""}`}
+      >
         <Routes>
           {/* Public Routes */}
           <Route path="/register" element={<Register />} />
@@ -255,11 +263,7 @@ function AppContent() {
 
 // The main App component that wraps everything with CartProvider
 function App() {
-  return (
-    <CartProvider>
-      <AppContent />
-    </CartProvider>
-  );
+  return <AppContent />;
 }
 
 export default App;
