@@ -20,7 +20,6 @@ const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
     const firebaseUser = result.user;
-    console.log("Google Sign-in Success:", firebaseUser);
     await loginWithFirebase(firebaseUser);
   } catch (error) {
     console.error("Google Sign-In Error:", error);
@@ -37,8 +36,6 @@ const handleGoogleSignIn = async () => {
           const firebaseUser = result.user;
           const idToken = await firebaseUser.getIdToken(); 
 
-          console.log("ล็อกอินด้วย Google สำเร็จ!");
-
           await loginWithFirebase(firebaseUser);
         }
       } catch (error) {
@@ -54,7 +51,6 @@ const handleGoogleSignIn = async () => {
 
   const handleSignOut = async () => {
     logout(); 
-    console.log("ออกจากระบบสำเร็จ!");
 
     try {
       await signOut(auth); 

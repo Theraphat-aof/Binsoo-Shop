@@ -32,7 +32,6 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setIsAuthenticated(false);
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
     setAuthError(message);
   }, []);
 
@@ -131,9 +130,8 @@ export const AuthProvider = ({ children }) => {
           }
         } else {
           const storedToken = authService.getToken();
-          const storedUser = authService.getCurrentUser();
 
-          if (storedToken && storedUser) {
+          if (storedToken) {
             try {
               const response = await authService.verifyToken();
               setAuthStatus(response.user, storedToken);
@@ -239,7 +237,6 @@ export const AuthProvider = ({ children }) => {
         photoURL: firebaseUser.photoURL,
       });
       setAuthStatus(data.user, data.token);
-      console.log("User Role from Backend:", data.user?.role);
       setLoading(false);
       navigateBasedOnRole(data.user?.role);
       return data;
