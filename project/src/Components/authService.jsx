@@ -88,11 +88,10 @@ const authService = {
         username,
         password,
       });
-      const { token, user } = response.data;
+      const { token } = response.data;
 
       // เก็บ token และข้อมูลผู้ใช้ใน Local Storage
       localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
 
       return response.data;
     } catch (error) {
@@ -116,11 +115,10 @@ const authService = {
         displayName,
         photoURL,
       });
-      const { token, user } = response.data;
+      const { token } = response.data;
 
       // เก็บ token และข้อมูลผู้ใช้ใน Local Storage
       localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
 
       return response.data;
     } catch (error) {
@@ -134,7 +132,6 @@ const authService = {
    */
   logout: () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
   },
 
   /**
@@ -152,23 +149,6 @@ const authService = {
    */
   isLoggedIn: () => {
     return !!localStorage.getItem('token');
-  },
-
-  /**
-   * ฟังก์ชันสำหรับดึงข้อมูลผู้ใช้ที่เก็บไว้ใน Local Storage (ถ้ามี)
-   * @returns {object|null} ข้อมูลผู้ใช้ หรือ null
-   */
-  getCurrentUser: () => {
-    const userStr = localStorage.getItem('user');
-    if (userStr) {
-      try {
-        return JSON.parse(userStr);
-      } catch (e) {
-        console.error("Error parsing user data from localStorage:", e);
-        return null;
-      }
-    }
-    return null;
   },
 
   /**

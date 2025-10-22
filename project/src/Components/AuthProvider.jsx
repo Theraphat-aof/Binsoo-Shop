@@ -272,7 +272,6 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     setAuthError(null);
     try {
-      await firebaseSignOut(auth);
       authService.logout();
       clearAuthStatus();
       navigate("/");
