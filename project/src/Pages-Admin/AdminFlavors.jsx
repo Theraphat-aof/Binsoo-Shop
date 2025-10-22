@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import adminProductService from "../Components/productServiceAdmin";
-import "../Styles/AdminFlavors.css"; 
+import "../Styles/AdminFlavors.css";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -164,16 +164,18 @@ const AdminFlavorsPage = () => {
                   accept="image/*"
                   onChange={handleInputChange}
                 />
-                {editingFlavor && editingFlavor.image_url && !formData.image && (
-                  <p className="current-image-preview">
-                    ไฟล์ภาพที่เลือก:{" "}
-                    <img
-                      src={`${API_BASE_URL}${editingFlavor.image_url}`}
-                      alt="Current"
-                      style={{ maxWidth: "50px", maxHeight: "50px" }}
-                    />
-                  </p>
-                )}
+                {editingFlavor &&
+                  editingFlavor.image_url &&
+                  !formData.image && (
+                    <p className="current-image-preview">
+                      ไฟล์ภาพที่เลือก:{" "}
+                      <img
+                        src={editingFlavor.image_url}
+                        alt="Current"
+                        style={{ maxWidth: "50px", maxHeight: "50px" }}
+                      />
+                    </p>
+                  )}
               </div>
               <div className="form-group">
                 <label>
@@ -214,12 +216,14 @@ const AdminFlavorsPage = () => {
               <div className="flavor-card-image-container">
                 {flavor.image_url ? (
                   <img
-                    src={`${API_BASE_URL}${flavor.image_url}`}
+                    src={flavor.image_url}
                     alt={flavor.name}
                     className="flavor-card-image"
                   />
                 ) : (
-                  <span className="flavor-card-image-placeholder">ไม่มีไฟล์ภาพ</span>
+                  <span className="flavor-card-image-placeholder">
+                    ไม่มีไฟล์ภาพ
+                  </span>
                 )}
               </div>
               <div className="flavor-card-content">

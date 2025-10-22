@@ -45,10 +45,6 @@ const CartPage = () => {
     }
     setUpdateMessage("");
     try {
-      const response = await productService.updateCartItemQuantity(
-        cartItemId,
-        newQuantity
-      );
       setUpdateMessage("");
       fetchCart();
       fetchCartCount();
@@ -77,10 +73,10 @@ const CartPage = () => {
 
   const handleClearCart = async () => {
     setUpdateMessage("");
-    if (window.confirm("Are you sure you want to clear your entire cart?")) {
+    if (window.confirm("คุณแน่ใจหรือไม่ว่าต้องการล้างตะกร้าสินค้าทั้งหมด?")) {
       try {
         await productService.clearCart();
-        setUpdateMessage("Cart cleared!");
+        setUpdateMessage("ล้างตะกร้าเรียบร้อยแล้ว!");
         setCart(null);
         fetchCartCount();
       } catch (err) {
@@ -93,13 +89,13 @@ const CartPage = () => {
   };
 
   if (loading) {
-    return <div className="cart-container">Loading cart...</div>;
+    return <div className="cart-container">กำลังโหลดตะกร้าสินค้า...</div>;
   }
 
   if (error) {
     return (
       <div className="cart-container">
-        <p className="error-text">Error: {error}</p>
+        <p className="error-text">ข้อผิดพลาด: {error}</p>
       </div>
     );
   }
@@ -107,8 +103,8 @@ const CartPage = () => {
   if (!cart || !cart.items || cart.items.length === 0) {
     return (
       <div className="cart-container">
-        <h2 className="cart-title">ตะกร้าสินค้า</h2> {/* เพิ่มชื่อหัวข้อ */}
-        <p className="cart-empty-message">ตะกร้าของคุณว่างเปล่า!</p>
+        <h2 className="cart-title">ตะกร้าสินค้า</h2>
+        <p className="cart-empty-message">ตะกร้าของคุณว่างเปล่า! 🛒</p>
         {updateMessage && <p className="message-text">{updateMessage}</p>}
       </div>
     );
@@ -138,7 +134,7 @@ const CartPage = () => {
                 {/* แสดงท็อปปิ้ง (ถ้ามี) */}
                 {item.toppings && item.toppings.length > 0 && (
                   <p className="item-toppings">
-                    Toppings:{" "}
+                    ท็อปปิ้ง:{" "}
                     {item.toppings
                       .map((t) => `${t.topping_name}`)
                       .join(", ")}
@@ -146,9 +142,11 @@ const CartPage = () => {
                 )}
                 <p className="item-price">
                   ราคา: ฿
-                  {item.total_item_price
+                  {/* แก้ไขการแสดงผลราคา: ตรวจสอบ item.total_item_price ก่อนเรียก toFixed */}
+                  {item.total_item_price &&
+                  typeof item.total_item_price === "number"
                     ? item.total_item_price.toFixed(2)
-                    : "N/A"}
+                    : "0.00"}
                 </p>
               </div>
             </div>
@@ -184,13 +182,17 @@ const CartPage = () => {
       </div>
       <div className="cart-summary">
         <h3 className="subtotal-text">
-          ราคารวม: ฿{cart.subtotal ? cart.subtotal.toFixed(2) : "0.00"}
+          {/* แก้ไขการแสดงผลราคารวม: ตรวจสอบ cart.subtotal ก่อนเรียก toFixed */}
+          ราคารวม: ฿
+          {cart.subtotal && typeof cart.subtotal === "number"
+            ? cart.subtotal.toFixed(2)
+            : "0.00"}
         </h3>
-        <div>
-          {" "}
-          {/*           <button onClick={handleClearCart} className="clear-cart-button">
-            Clear Cart
-          </button> */}
+        <div className="summary-buttons">
+          {/* นำปุ่ม Clear Cart กลับมาแสดง */}
+          <button onClick={handleClearCart} className="clear-cart-button">
+            ล้างตะกร้า
+          </button>
           <button
             onClick={() => navigate("/checkout")}
             className="checkout-button"

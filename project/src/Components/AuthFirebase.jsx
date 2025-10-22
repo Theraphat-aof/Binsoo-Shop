@@ -34,7 +34,6 @@ function AuthFirebase() {
 
         if (result) {
           const firebaseUser = result.user;
-          const idToken = await firebaseUser.getIdToken();
 
           await loginWithFirebase(firebaseUser);
         }
