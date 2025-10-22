@@ -49,7 +49,6 @@ const CartPage = () => {
         cartItemId,
         newQuantity
       );
-      console.log("Updated cart item:", response);
       setUpdateMessage("");
       fetchCart();
       fetchCartCount();

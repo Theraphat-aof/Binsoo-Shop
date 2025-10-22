@@ -1,31 +1,31 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../Components/Firebase"; 
+import { auth } from "../Components/Firebase";
 import {
   GoogleAuthProvider,
   signInWithPopup,
   getRedirectResult,
   signOut,
 } from "firebase/auth";
-import { useAuth } from "../Components/useAuth"; 
+import { useAuth } from "../Components/useAuth";
 
 import { FcGoogle } from "react-icons/fc";
 
 function AuthFirebase() {
-  const { loginWithFirebase, logout, isAuthenticated, user } = useAuth(); 
+  const { loginWithFirebase, logout, isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
 
-const handleGoogleSignIn = async () => {
-  try {
-    const provider = new GoogleAuthProvider();
-    const result = await signInWithPopup(auth, provider);
-    const firebaseUser = result.user;
-    await loginWithFirebase(firebaseUser);
-  } catch (error) {
-    console.error("Google Sign-In Error:", error);
-    alert("ไม่สามารถเข้าสู่ระบบด้วย Google ได้ กรุณาลองใหม่อีกครั้ง");
-  }
-};
+  const handleGoogleSignIn = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      const firebaseUser = result.user;
+      await loginWithFirebase(firebaseUser);
+    } catch (error) {
+      console.error("Google Sign-In Error:", error);
+      alert("ไม่สามารถเข้าสู่ระบบด้วย Google ได้ กรุณาลองใหม่อีกครั้ง");
+    }
+  };
 
   useEffect(() => {
     const handleRedirectResult = async () => {
@@ -34,7 +34,7 @@ const handleGoogleSignIn = async () => {
 
         if (result) {
           const firebaseUser = result.user;
-          const idToken = await firebaseUser.getIdToken(); 
+          const idToken = await firebaseUser.getIdToken();
 
           await loginWithFirebase(firebaseUser);
         }
@@ -50,10 +50,10 @@ const handleGoogleSignIn = async () => {
   }, [loginWithFirebase, logout, navigate]);
 
   const handleSignOut = async () => {
-    logout(); 
+    logout();
 
     try {
-      await signOut(auth); 
+      await signOut(auth);
     } catch (error) {
       console.error("Firebase Sign Out Error:", error);
     }
@@ -61,7 +61,7 @@ const handleGoogleSignIn = async () => {
 
   return (
     <div>
-      {isAuthenticated && user ? ( 
+      {isAuthenticated && user ? (
         <div>
           <button onClick={handleSignOut}>ออกจากระบบ (Google)</button>
         </div>

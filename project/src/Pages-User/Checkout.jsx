@@ -45,11 +45,15 @@ const CheckoutPage = () => {
       const data = await productService.getCart();
       setCart(data.cart);
       if (data.cart && data.cart.items.length === 0) {
-        setGeneralError("Your cart is empty. Please add items before checking out.");
+        setGeneralError(
+          "Your cart is empty. Please add items before checking out."
+        );
       }
     } catch (err) {
       console.error("Error fetching cart for checkout:", err);
-      setGeneralError("Failed to load cart details. Please ensure you are logged in.");
+      setGeneralError(
+        "Failed to load cart details. Please ensure you are logged in."
+      );
     } finally {
       setLoading(false);
     }
@@ -111,11 +115,7 @@ const CheckoutPage = () => {
         })),
       };
 
-      console.log("Sending order details to backend:", orderDetails);
-
       const responseData = await productService.createOrder(orderDetails);
-
-      console.log("Order creation response from backend:", responseData);
 
       const createdOrderData = {
         id: responseData.orderId,
@@ -148,12 +148,6 @@ const CheckoutPage = () => {
         }
       }
 
-      console.log(
-        "Navigating to confirmation with paymentMethod (from response):",
-        responseData.paymentMethod
-      );
-      console.log("Navigating to confirmation with qrCodeData:", qrCodePayload);
-
       setCart(null);
 
       navigate("/order-confirmation", {
@@ -185,7 +179,9 @@ const CheckoutPage = () => {
 
       const downloadLink = document.createElement("a");
       downloadLink.href = svgUrl;
-      downloadLink.download = `promptpay-bingsoo-order-${orderCreated?.id || 'new'}.svg`;
+      downloadLink.download = `promptpay-bingsoo-order-${
+        orderCreated?.id || "new"
+      }.svg`;
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
@@ -197,7 +193,9 @@ const CheckoutPage = () => {
   };
 
   if (loading) {
-    return <div className="checkout-container">Loading cart for checkout...</div>;
+    return (
+      <div className="checkout-container">Loading cart for checkout...</div>
+    );
   }
 
   if (generalError && !orderCreated) {
@@ -218,9 +216,7 @@ const CheckoutPage = () => {
     return (
       <div className="checkout-container">
         <h2 className="checkout-title">Order Placed Successfully!</h2>
-        <p className="success-message">
-          Your Order ID: **{orderCreated.id}**
-        </p>
+        <p className="success-message">Your Order ID: **{orderCreated.id}**</p>
         <p className="success-message">
           ราคารวม **฿
           {orderCreated.total_amount
@@ -283,7 +279,10 @@ const CheckoutPage = () => {
       </div>
 
       <div className="form-section">
-        <label className="form-label">ที่นั่ง {addressError && <span className="error-inline">{addressError}</span>}</label>
+        <label className="form-label">
+          ที่นั่ง{" "}
+          {addressError && <span className="error-inline">{addressError}</span>}
+        </label>
         <input
           type="text"
           value={deliveryAddress}
@@ -293,28 +292,39 @@ const CheckoutPage = () => {
           }}
           placeholder="ใส่หมายเลขโต๊ะ"
           rows="3"
-          className={`form-textarea ${addressError ? 'input-error' : ''}`} 
+          className={`form-textarea ${addressError ? "input-error" : ""}`}
           required
         ></input>
 
-        <label className="form-label">เบอร์โทรศัพท์ {phoneError && <span className="error-inline">{phoneError}</span>}</label>
+        <label className="form-label">
+          เบอร์โทรศัพท์{" "}
+          {phoneError && <span className="error-inline">{phoneError}</span>}
+        </label>
         <input
           type="text"
           value={contactPhone}
           onChange={(e) => {
             const re = /^[0-9\b]+$/;
-            if (e.target.value === '' || (re.test(e.target.value) && e.target.value.length <= 10)) {
-                setContactPhone(e.target.value);
-                if (phoneError) setPhoneError(null); // เคลียร์ error เมื่อผู้ใช้เริ่มพิมพ์
+            if (
+              e.target.value === "" ||
+              (re.test(e.target.value) && e.target.value.length <= 10)
+            ) {
+              setContactPhone(e.target.value);
+              if (phoneError) setPhoneError(null); // เคลียร์ error เมื่อผู้ใช้เริ่มพิมพ์
             }
           }}
           placeholder="ใส่เบอร์โทรศัพท์ติดต่อ"
-          className={`form-input ${phoneError ? 'input-error' : ''}`} 
+          className={`form-input ${phoneError ? "input-error" : ""}`}
           maxLength="10"
           required
         />
 
-        <label className="form-label">ชำระเงินโดย {paymentMethodError && <span className="error-inline">{paymentMethodError}</span>}</label>
+        <label className="form-label">
+          ชำระเงินโดย{" "}
+          {paymentMethodError && (
+            <span className="error-inline">{paymentMethodError}</span>
+          )}
+        </label>
         <div className="payment-method-options">
           <button
             type="button"
