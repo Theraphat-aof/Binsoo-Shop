@@ -196,7 +196,7 @@ function AppContent() {
 
       {/* Adjust content padding based on whether the navbar is present */}
       <div className={`content-area ${shouldHideNavbar ? "no-nav-padding" : ""}`}>
-        <Routes basename="/Binsoo-Shop">
+        <Routes>
           {/* Public Routes */}
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Login />} />
