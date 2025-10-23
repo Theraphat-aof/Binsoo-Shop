@@ -116,25 +116,46 @@
 }
 
 .error-message {
-  color: #a94442; 
+  color: #a94442;
   background-color: #f2dede;
-  border: 1px solid #ebccd1; 
+  border: 1px solid #ebccd1;
   padding: 10px !important;
   margin-top: 20px;
   margin-bottom: 20px;
   border-radius: 8px;
   text-align: center;
-  font-size: 1em; 
+  font-size: 1em;
   font-weight: bold;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   animation: fadeInOut 5s forwards; /* 5s duration, stays at end state */
 }
 
 @keyframes fadeInOut {
-  0% { opacity: 0; transform: translateY(-10px); } /* เริ่มต้นจางหายและเลื่อนขึ้นเล็กน้อย */
-  10% { opacity: 1; transform: translateY(0); } /* ปรากฏขึ้นเต็มที่ */
-  90% { opacity: 1; transform: translateY(0); } /* คงอยู่ */
-  100% { opacity: 0; transform: translateY(-10px); } /* จางหายและเลื่อนขึ้นเล็กน้อย */
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  } /* เริ่มต้นจางหายและเลื่อนขึ้นเล็กน้อย */
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  } /* ปรากฏขึ้นเต็มที่ */
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  } /* คงอยู่ */
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  } /* จางหายและเลื่อนขึ้นเล็กน้อย */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* --- Responsive Adjustments --- */
@@ -259,7 +280,7 @@
 
 @media (max-width: 1199px) {
   .login-container {
-    padding-top: 20em !important; 
+    padding-top: 20em !important;
     overflow: hidden !important;
   }
 
@@ -332,4 +353,3 @@
     padding: 8px;
   }
 }
-

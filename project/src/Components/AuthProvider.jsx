@@ -294,12 +294,25 @@ export const AuthProvider = ({ children }) => {
       <div
         style={{
           display: "flex",
+          flexDirection: "column", // Added to stack the spinner and text
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
           fontSize: "1.2em",
         }}
       >
+        <div
+          className="spinner"
+          style={{
+            border: "6px solid #f3f3f3",
+            borderTop: "6px solid #784212",
+            borderRadius: "50%",
+            width: "40px",
+            height: "40px",
+            animation: "spin 1s linear infinite",
+            marginBottom: "15px",
+          }}
+        />
         โปรดรอสักครู่...
       </div>
     );
