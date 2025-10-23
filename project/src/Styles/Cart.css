@@ -169,12 +169,18 @@
   font-weight: bold;
 }
 
+.summary-buttons {
+  display: flex;
+  gap: 1em;
+}
+
 .clear-cart-button,
 .checkout-button {
   padding: 12px; /* เพิ่ม padding */
   border: none;
   border-radius: 8px; /* ทำให้มุมมนขึ้น */
   cursor: pointer;
+  font-size: 1em;
   font-weight: bold;
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
@@ -182,6 +188,7 @@
 .clear-cart-button {
   background-color: #f0ad4e; /* สีส้ม */
   color: white;
+  width: 150px;
 }
 
 .clear-cart-button:hover {
