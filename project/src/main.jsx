@@ -4,16 +4,16 @@ import "./index.css";
 import App from "./App.jsx";
 import { AuthProvider } from "./Components/AuthProvider";
 import { CartProvider } from "./Components/CartContext";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <BrowserRouter basename="/Binsoo-Shop/">
+    <HashRouter>
       <AuthProvider>
         <CartProvider>
           <App />
         </CartProvider>
       </AuthProvider>
-    </BrowserRouter>
+    </HashRouter>
   </StrictMode>
 );
